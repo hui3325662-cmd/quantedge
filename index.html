@@ -111,24 +111,24 @@
                         <span>EURUSD <span class="text-emerald-500 font-bold" id="tick_EURUSD">1.0845</span></span>
                         <span>GBPUSD <span class="text-emerald-500 font-bold" id="tick_GBPUSD">1.2678</span></span>
                         <span>USDJPY <span class="text-rose-500 font-bold" id="tick_USDJPY">151.34</span></span>
-                        <span>现货黄金 (XAUUSD) <span class="text-yellow-500 font-bold" id="tick_XAUUSD">加载中...</span></span>
-                        <span>比特币 (BTCUSD) <span class="text-emerald-500 font-bold" id="tick_BTC">加载中...</span></span>
-                        <span>以太坊 (ETHUSD) <span class="text-emerald-500 font-bold" id="tick_ETH">加载中...</span></span>
-                        <span>SOLUSD <span class="text-emerald-500 font-bold" id="tick_SOL">加载中...</span></span>
-                        <span>BNBUSD <span class="text-emerald-500 font-bold" id="tick_BNB">加载中...</span></span>
-                        <span>OKBUSD <span class="text-emerald-500 font-bold" id="tick_OKB">加载中...</span></span>
+                        <span>现货黄金 (XAUUSD) <span class="text-yellow-500 font-bold" id="tick_XAUUSD">XAU加载中...</span></span>
+                        <span>比特币 (BTCUSD) <span class="text-emerald-500 font-bold" id="tick_BTC">BTC加载中...</span></span>
+                        <span>以太坊 (ETHUSD) <span class="text-emerald-500 font-bold" id="tick_ETH">ETH加载中...</span></span>
+                        <span>SOLUSD <span class="text-emerald-500 font-bold" id="tick_SOL">SOL加载中...</span></span>
+                        <span>BNBUSD <span class="text-emerald-500 font-bold" id="tick_BNB">BNB加载中...</span></span>
+                        <span>OKBUSD <span class="text-emerald-500 font-bold" id="tick_OKB">OKB加载中...</span></span>
                     </div>
                     <!-- 第二组克隆数据用于无感无缝滚动 -->
                     <div class="flex gap-8 text-zinc-400">
                         <span>EURUSD <span class="text-emerald-500 font-bold" id="tick2_EURUSD">1.0845</span></span>
                         <span>GBPUSD <span class="text-emerald-500 font-bold" id="tick2_GBPUSD">1.2678</span></span>
                         <span>USDJPY <span class="text-rose-500 font-bold" id="tick2_USDJPY">151.34</span></span>
-                        <span>现货黄金 (XAUUSD) <span class="text-yellow-500 font-bold" id="tick2_XAUUSD">加载中...</span></span>
-                        <span>比特币 (BTCUSD) <span class="text-emerald-500 font-bold" id="tick2_BTC">加载中...</span></span>
-                        <span>以太坊 (ETHUSD) <span class="text-emerald-500 font-bold" id="tick2_ETH">加载中...</span></span>
-                        <span>SOLUSD <span class="text-emerald-500 font-bold" id="tick2_SOL">加载中...</span></span>
-                        <span>BNBUSD <span class="text-emerald-500 font-bold" id="tick2_BNB">加载中...</span></span>
-                        <span>OKBUSD <span class="text-emerald-500 font-bold" id="tick2_OKB">加载中...</span></span>
+                        <span>现货黄金 (XAUUSD) <span class="text-yellow-500 font-bold" id="tick2_XAUUSD">XAU加载中...</span></span>
+                        <span>比特币 (BTCUSD) <span class="text-emerald-500 font-bold" id="tick2_BTC">BTC加载中...</span></span>
+                        <span>以太坊 (ETHUSD) <span class="text-emerald-500 font-bold" id="tick2_ETH">ETH加载中...</span></span>
+                        <span>SOLUSD <span class="text-emerald-500 font-bold" id="tick2_SOL">SOL加载中...</span></span>
+                        <span>BNBUSD <span class="text-emerald-500 font-bold" id="tick2_BNB">BNB加载中...</span></span>
+                        <span>OKBUSD <span class="text-emerald-500 font-bold" id="tick2_OKB">OKB加载中...</span></span>
                     </div>
                 </div>
             </div>
@@ -202,7 +202,7 @@
                     </div>
                     <div class="absolute top-full right-0 mt-1 bg-[#121215] border border-[#c5a059]/10 rounded-lg shadow-2xl py-2 w-52 z-50 hidden group-hover:block">
                         <div class="px-4 py-2 border-b border-zinc-800">
-                            <p class="text-[10px] text-zinc-500" data-i18n="user_role">账户所有人</p>
+                            <p class="text-[10px] text-zinc-400" data-i18n="user_role">账户所有人</p>
                             <p class="text-xs font-bold text-[#c5a059] mt-0.5">hoey_quant@outlook.com</p>
                         </div>
                         <a href="#" onclick="app.switchTab('account-center')" class="block px-4 py-2 text-xs text-zinc-300 hover:bg-[#18181c] hover:text-[#c5a059]"><i class="fa-solid fa-cloud-arrow-up mr-2"></i><span data-i18n="user_bind">绑定实盘 MT4/5</span></a>
@@ -672,7 +672,7 @@
                                 </tr>
                             </thead>
                             <tbody id="activeRulesList">
-                                <!-- 由 JS 填充持久化的用户绑定数据 -->
+                                <!-- 由 JS 填充存储的数据 -->
                             </tbody>
                         </table>
                     </div>
@@ -680,7 +680,7 @@
             </div>
         </section>
 
-        <!-- Tab 4: 支持中心 (对齐 image_1058e2 精密架构) -->
+        <!-- Tab 4: 支持中心 (对齐 image_1058e2 精密架构，含工单与7国语言全文本知识库) -->
         <section id="support-center" class="tab-content hidden animate-fade-in">
             <div class="flex flex-col lg:flex-row gap-8 items-start">
                 
@@ -787,6 +787,109 @@
         </button>
     </div>
 
+    <!-- ==================== Wintop 曜金黑高保真自动收银台弹窗 (Stripe / USDT) ==================== -->
+    <div id="paymentModal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-[#121215] border border-[#c5a059]/30 rounded-2xl w-full max-w-md p-6 relative shadow-2xl">
+            <!-- 关闭按钮 -->
+            <button onclick="app.closePaymentModal()" class="absolute top-4 right-4 text-zinc-400 hover:text-white"><i class="fa-solid fa-times text-base"></i></button>
+            
+            <div class="text-center mb-6">
+                <div class="w-12 h-12 rounded-full bg-[#c5a059]/10 border border-[#c5a059] flex items-center justify-center mx-auto text-xl text-[#c5a059] mb-3">
+                    <i class="fa-solid fa-wallet"></i>
+                </div>
+                <h3 class="text-base font-bold text-white">Wintop 云跟单网桥结账通道</h3>
+                <p class="text-[10px] text-zinc-500 mt-1">请选择以下官方认证的交易支付接口完成跟单同步授权</p>
+            </div>
+
+            <!-- 待支付订单信息 -->
+            <div class="bg-black/60 border border-zinc-800 rounded-xl p-4 mb-6">
+                <div class="flex justify-between items-center text-xs pb-2 border-b border-zinc-900">
+                    <span class="text-zinc-400">跟随目标策略:</span>
+                    <span class="text-white font-bold" id="pay_strategy_name">Just Connect Ai</span>
+                </div>
+                <div class="flex justify-between items-center text-xs pt-2">
+                    <span class="text-zinc-400">计费周期(月费):</span>
+                    <span class="text-[#c5a059] font-black font-mono" id="pay_strategy_fee">$199.00 /月</span>
+                </div>
+            </div>
+
+            <!-- 选择支付渠道 Tab -->
+            <div class="flex gap-2 mb-6">
+                <button onclick="app.selectPaymentChannel('stripe')" id="pay_btn_stripe" class="flex-1 py-2 rounded-lg text-xs font-bold border border-[#c5a059] bg-[#c5a059] text-black transition-all flex items-center justify-center gap-1.5">
+                    <i class="fa-solid fa-credit-card"></i> 信用卡支付
+                </button>
+                <button onclick="app.selectPaymentChannel('usdt')" id="pay_btn_usdt" class="flex-1 py-2 rounded-lg text-xs font-bold border border-zinc-800 text-zinc-400 hover:text-white transition-all flex items-center justify-center gap-1.5">
+                    <i class="fa-brands fa-ethereum"></i> USDT (TRC-20)
+                </button>
+            </div>
+
+            <!-- Stripe 信用卡渲染区 -->
+            <div id="stripe_form_area" class="block">
+                <div class="flex flex-col gap-3 mb-6 text-xs">
+                    <div class="flex flex-col gap-1">
+                        <label class="text-[10px] text-zinc-400">持卡人姓名 (Cardholder Name)</label>
+                        <input type="text" placeholder="Hoey Quant" class="bg-black border border-zinc-800 px-3 py-2 rounded-lg text-white font-mono outline-none">
+                    </div>
+                    <div class="flex flex-col gap-1">
+                        <label class="text-[10px] text-zinc-400">卡号 (Card Number)</label>
+                        <div class="relative">
+                            <input type="text" placeholder="4111 2222 3333 4444" class="w-full bg-black border border-zinc-800 px-3 py-2 pl-9 rounded-lg text-white font-mono outline-none">
+                            <i class="fa-solid fa-credit-card absolute left-3 top-2.5 text-zinc-500"></i>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="flex flex-col gap-1">
+                            <label class="text-[10px] text-zinc-400">有效期 (Expiry)</label>
+                            <input type="text" placeholder="05 / 29" class="bg-black border border-zinc-800 px-3 py-2 rounded-lg text-white font-mono text-center outline-none">
+                        </div>
+                        <div class="flex flex-col gap-1">
+                            <label class="text-[10px] text-zinc-400">安全码 (CVC)</label>
+                            <input type="password" placeholder="***" class="bg-black border border-zinc-800 px-3 py-2 rounded-lg text-white font-mono text-center outline-none">
+                        </div>
+                    </div>
+                </div>
+                <button onclick="app.simulateStripePay()" class="w-full py-3 bg-gradient-to-r from-[#9a7d3c] to-[#e5c17d] text-black font-extrabold rounded-xl text-xs shadow-lg shadow-[#c5a059]/10">
+                    通过 Stripe 安全通道付款 ($199.00)
+                </button>
+            </div>
+
+            <!-- USDT 极速扫码渲染区 (带倒计时与剪贴板复制功能) -->
+            <div id="usdt_form_area" class="hidden">
+                <div class="flex flex-col items-center gap-4 mb-6">
+                    <!-- 模拟二维码 -->
+                    <div class="w-32 h-32 bg-white border border-[#c5a059]/30 rounded-xl p-2 flex items-center justify-center relative shadow-inner">
+                        <div class="text-slate-900 flex flex-col items-center justify-center gap-1">
+                            <i class="fa-brands fa-ethereum text-3xl text-emerald-600"></i>
+                            <span class="text-[9px] font-black tracking-widest uppercase">TRC-20 SCAN</span>
+                        </div>
+                        <!-- 水印 -->
+                        <div class="absolute inset-0 bg-black/5 flex items-center justify-center"></div>
+                    </div>
+                    <div class="text-center">
+                        <p class="text-[10px] text-zinc-400">USDT (TRC-20) 官方清算充值地址:</p>
+                        <div class="flex items-center gap-1.5 bg-black px-3 py-1.5 rounded-lg border border-zinc-800 mt-1">
+                            <span class="text-[10px] font-mono text-[#c5a059] font-bold select-all">TY6qB7b...k7vXnS</span>
+                            <button onclick="app.copyUSDTAddress()" class="text-zinc-500 hover:text-white text-[11px]"><i class="fa-solid fa-copy"></i></button>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <span class="text-[10px] text-zinc-500 font-bold flex items-center gap-1">
+                            <i class="fa-regular fa-clock animate-spin text-orange-500"></i>
+                            <span>支付有效倒计时: <span class="text-rose-500 font-mono font-bold" id="pay_timer">15:00</span></span>
+                        </span>
+                    </div>
+                </div>
+                <button onclick="app.simulateUSDTConfirm()" class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold rounded-xl text-xs shadow-lg shadow-emerald-600/10">
+                    我已完成链上转账，提交财务对账
+                </button>
+            </div>
+
+            <div class="mt-4 text-center">
+                <span class="text-[9px] text-zinc-600"><i class="fa-solid fa-shield-halved"></i> 本系统由 Wintop 多核抗洗钱合规框架完全加密安全护航</span>
+            </div>
+        </div>
+    </div>
+
     <!-- ==================== 国际化语言多国翻译字典包 (7国语言完全核实清洗版) ==================== -->
     <script>
         const i18n = {
@@ -890,7 +993,7 @@
                 seo_h1: "什么是智能云跟单系统？",
                 seo_h2: "如何设置跟单参数与控制回撤？",
                 seo_h3: "Google SEO 及推广白皮书声明",
-                seo_p1: "智能云跟单系统是一种先进的金融科技，通过云端服务器将交易信号发布者在纽约 LD4 与伦敦 LD3 的买卖动作毫秒级复制到多个跟随者账户。无需在个人电脑上安装常开的 EA 程序或购买 VPS。Wintop 云端架构自动进行交易手数计算和延迟滑点防范。",
+                seo_p1: "智能云跟单系统是一种先进的金融科技，通过云端服务器将交易信号发布者在纽约 LD4 与伦敦 LD3 的买卖动作毫秒级复制到多个跟随者账户。无需在个人电脑上安装常开的 EA程序或购买 VPS。Wintop 云端架构自动进行交易手数计算和延迟滑点防范。",
                 seo_p2: "用户在控制面板连接 MT4/MT5 只读账户后，可以自定义配置跟单风控倍率。此外，系统内置的最大实时回撤熔断保护能够防止单日黑天鹅行情导致的意外亏损，当系统检测到实时净值下跌至警戒线下时将执行全局强平指令。",
                 seo_p3: "作为面向全球市场的正规量化技术提供商，Wintop 严格遵守金融中介服务合规。本平台展示的过往策略业绩由专业历史回测数据构成，旨在为您提供量化交易的客观参考，外汇保证金交易具有高杠杆风险，请合理使用风控倍数。",
                 footer_warn: "过往业绩不代表未来表现，外汇保证金跟单交易具有极高资金杠杆风险，可能导致资金亏损，请理性选择风控乘数。",
@@ -1573,7 +1676,7 @@
                 seo_h3: "Conformité Google SEO et Financière",
                 seo_p1: "Solution fintech de pointe répliquant les ordres du fournisseur sur les comptes des abonnés en quelques millisecondes. Pas de VPS nécessaire. Algorithmes gérant levier et lots de façon dynamique.",
                 seo_p2: "Les abonnés peuvent configurer le multiplicateur. Des moniteurs de marge surveillent en permanence les marges pour limiter les risques.",
-                seo_p3: "Wintop respecte les directives fintech mondiales. Les performances passées ne garantissent pas les rendements futurs.",
+                seo_p3: "Wintop respecte les directives fintech mondiales. Les performances passées ne garantissent pas les rendements futures.",
                 footer_warn: "Les performances passées ne préjugent pas des résultats futurs. Le trading à effet de levier comporte des risques importants de perte en capital.",
                 chat_header: "Support Technique Wintop",
                 chat_sub: "Toujours à l'écoute de vos ordres",
@@ -1703,7 +1806,7 @@
                 faq_q1: "Q: Perché c'è slippage di negoziazione?",
                 faq_q2: "Q: Quali broker sono compatibili?",
                 faq_q3: "Q: Come vengono pagati i fornitori di segnali?",
-                faq_a1: "A: La latenza di rete deriva dalla distanza geografica. Wintop si collega direttamente a NY Equinix LD4 per ridurre al minimo il ritardo di transito.",
+                faq_a1: "A: La latenza di rete deriva dalla distanza geografica. Wintop si collega direttamente a NY Equinix LD4 per ridurre al primo il ritardo di transito.",
                 faq_a2: "A: Compatibile con tutti i broker che utilizzano una connettività standard MT4/MT5 (es. IC Markets, Pepperstone).",
                 faq_a3: "A: I fornitori ricevono il 70% dei profitti di abbonamento. I pagamenti vengono elaborati ogni 5 del mese tramite USDT TRC20.",
                 seo_title: "Libro Bianco Tecnico del Copiatore Cloud Wintop",
@@ -1864,7 +1967,7 @@
                     q_en: "Do I need to keep my trading terminal open 24/7?",
                     q_id: "Apakah saya harus membiarkan terminal trading saya terus terbuka?",
                     q_de: "Muss mein Trading-Terminal rund um die Uhr geöffnet bleiben?",
-                    q_es: "¿Necesito mantener mi terminal de trading abierta 24/7?",
+                    q_es: "Necesito mantener mi terminal de trading abierta 24/7?",
                     q_fr: "Dois-je laisser mon terminal de trading allumé 24h/24 ?",
                     q_it: "Devo tenere il mio terminale di trading aperto 24h/24?",
                     a_zh: "不需要。由于我们的复制引擎完全运行在云端网关，在您的绑定设置激活后，您可以关闭手机或电脑，甚至处于断网状态，跟单动作依然会 24/5 自动执行。",
@@ -2138,6 +2241,7 @@
             selectedSupportCategory: 'faq',
             openAccordionId: null,
             dashboardChart: null,
+            payCountdown: null,
 
             init() {
                 this.loadFromStorage();
@@ -2145,7 +2249,7 @@
                 this.renderSignalsTable(mockSignals);
                 this.renderActiveRules();
                 this.renderSupportCategory(); // 渲染常见问题右侧列表
-                this.initRealtimeTicker(); // 极速拉取并轮跳实盘外汇、PAXG现货黄金与加密货币价格
+                this.initRealtimeTicker(); // 极速拉取并轮跳实盘外汇与加密货币价格
                 this.initDashboardPerformanceChart(); // 初始化大图表看板
                 this.startTerminalLogsGenerator(); // 启动订单终端流
             },
@@ -2206,7 +2310,7 @@
                 document.getElementById('langDropdown').classList.toggle('hidden');
             },
 
-            // 极速真实金融API拉取走马灯数据 (完美纠偏：通过 Pax Gold PAXG 实时计算真正的黄金现货价格)
+            // 极速真实金融API拉取走马灯数据 (采用国际清算协议，黄金直接锚定 Pax Gold)
             async initRealtimeTicker() {
                 const EUR = document.getElementById('tick_EURUSD');
                 const GBP = document.getElementById('tick_GBPUSD');
@@ -2228,11 +2332,10 @@
                 const BNB2 = document.getElementById('tick2_BNB');
                 const OKB2 = document.getElementById('tick2_OKB');
 
-                // 2026年最新黄金与加密货币基准
                 let priceEUR = 1.0845;
                 let priceGBP = 1.2678;
                 let priceJPY = 151.34;
-                let priceXAU = 4505.80; // 现货黄金克隆盎司真实2026价格
+                let priceXAU = 2335.80; // 现货黄金克隆盎司真实价格
                 let priceBTC = 68520.00;
                 let priceETH = 3810.00;
                 let priceSOL = 165.20;
@@ -2264,7 +2367,6 @@
 
                 const fetchCryptoAndGold = async () => {
                     try {
-                        // 精准抓取 PAXG (Pax Gold -LBMA黄金)，BTC, ETH, SOL, BNB, OKB
                         const response = await fetch('https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC,ETH,SOL,BNB,OKB,PAXG&tsyms=USD');
                         const data = await response.json();
                         if (data) {
@@ -2273,7 +2375,6 @@
                             if (data.SOL) priceSOL = data.SOL.USD;
                             if (data.BNB) priceBNB = data.BNB.USD;
                             if (data.OKB) priceOKB = data.OKB.USD;
-                            // 现货黄金完全使用 PAXG 清算价格对齐，绝对精确真实
                             if (data.PAXG) priceXAU = data.PAXG.USD;
                             updateTickerDOM();
                         }
@@ -2625,7 +2726,7 @@
                 if (!rulesBody) return;
 
                 if (this.activeRules.length === 0) {
-                    rulesBody.innerHTML = `<tr><td colspan="5" class="py-4 text-center text-zinc-500">当前没有处于活动状态 of API 风控实例。</td></tr>`;
+                    rulesBody.innerHTML = `<tr><td colspan="5" class="py-4 text-center text-zinc-500">当前没有处于活动状态的 API 风控实例。</td></tr>`;
                     return;
                 }
 
@@ -2644,13 +2745,102 @@
                 `).join('');
             },
 
+            // 订阅信号 - 调起高保真收银台
             subscribeSignal(name, price) {
-                confetti({
-                    particleCount: 50,
-                    spread: 60,
-                    origin: { y: 0.8 }
-                });
-                this.showCustomNotification(`已成功开通对 ${name} 策略的云同步监听，系统会开始按设定比率计算手数。`);
+                // 填充收银台订单参数
+                document.getElementById('pay_strategy_name').innerText = name;
+                document.getElementById('pay_strategy_fee').innerText = `$${price.toFixed(2)} /月`;
+
+                // 展现收银台
+                const modal = document.getElementById('paymentModal');
+                modal.classList.remove('hidden');
+
+                // 启动15分钟USDT支付倒计时
+                this.startPaymentCountdown(15 * 60);
+            },
+
+            closePaymentModal() {
+                document.getElementById('paymentModal').classList.add('hidden');
+                if (this.payCountdown) {
+                    clearInterval(this.payCountdown);
+                }
+            },
+
+            selectPaymentChannel(channel) {
+                const btnStripe = document.getElementById('pay_btn_stripe');
+                const btnUSDT = document.getElementById('pay_btn_usdt');
+                const formStripe = document.getElementById('stripe_form_area');
+                const formUSDT = document.getElementById('usdt_form_area');
+
+                if (channel === 'stripe') {
+                    btnStripe.className = "flex-1 py-2 rounded-lg text-xs font-bold border border-[#c5a059] bg-[#c5a059] text-black transition-all flex items-center justify-center gap-1.5";
+                    btnUSDT.className = "flex-1 py-2 rounded-lg text-xs font-bold border border-zinc-800 text-zinc-400 hover:text-white transition-all flex items-center justify-center gap-1.5";
+                    formStripe.className = "block";
+                    formUSDT.className = "hidden";
+                } else {
+                    btnUSDT.className = "flex-1 py-2 rounded-lg text-xs font-bold border border-[#c5a059] bg-[#c5a059] text-black transition-all flex items-center justify-center gap-1.5";
+                    btnStripe.className = "flex-1 py-2 rounded-lg text-xs font-bold border border-zinc-800 text-zinc-400 hover:text-white transition-all flex items-center justify-center gap-1.5";
+                    formUSDT.className = "block";
+                    formStripe.className = "hidden";
+                }
+            },
+
+            // 模拟 Stripe 信用卡扣款
+            simulateStripePay() {
+                this.showCustomNotification("正在通过 Stripe 安全支付网关进行扣款清算，请稍后...");
+                setTimeout(() => {
+                    confetti({
+                        particleCount: 100,
+                        spread: 70,
+                        origin: { y: 0.6 }
+                    });
+                    this.showCustomNotification("信用卡订阅成功！您的跟单网关密钥已自动授权并启动。");
+                    this.closePaymentModal();
+                }, 2000);
+            },
+
+            // 复制 USDT 地址并提醒
+            copyUSDTAddress() {
+                navigator.clipboard.writeText("TY6qB7bqXN4uD8sLk7vXnS");
+                this.showCustomNotification("USDT (TRC-20) 官方支付地址已成功复制到剪贴板！");
+            },
+
+            // 模拟提交链上转账对账
+            simulateUSDTConfirm() {
+                this.showCustomNotification("已提交您的 TRC-20 链上转账流水！由于链上区块确认延迟，财务正在加速核准...");
+                setTimeout(() => {
+                    confetti({
+                        particleCount: 120,
+                        spread: 80,
+                        origin: { y: 0.6 }
+                    });
+                    this.showCustomNotification("对账成功！已检测到 USDT 资金注入。Wintop 实盘跟单密钥已自动部署。");
+                    this.closePaymentModal();
+                }, 3000);
+            },
+
+            // 支付倒计时时钟
+            startPaymentCountdown(duration) {
+                if (this.payCountdown) {
+                    clearInterval(this.payCountdown);
+                }
+                let timer = duration, minutes, seconds;
+                const display = document.getElementById('pay_timer');
+
+                this.payCountdown = setInterval(() => {
+                    minutes = parseInt(timer / 60, 10);
+                    seconds = parseInt(timer % 60, 10);
+
+                    minutes = minutes < 10 ? "0" + minutes : minutes;
+                    seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                    display.textContent = minutes + ":" + seconds;
+
+                    if (--timer < 0) {
+                        clearInterval(this.payCountdown);
+                        display.textContent = "过期失效";
+                    }
+                }, 1000);
             },
 
             // 多维度支持页面分类切换渲染
