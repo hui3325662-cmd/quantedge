@@ -1,3 +1,54 @@
+<title>SignalStart 克隆版 | QuantEdge 量化跟单与交易信号管理系统</title>
+<!-- 加载 TailwindCSS -->
+<script src="https://cdn.tailwindcss.com"></script>
+<!-- 加载 FontAwesome 图标库 (无SVG直接渲染) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<!-- 加载谷歌 Inter & JetBrains Mono 字体 -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght=300;400;500;600;700&family=JetBrains+Mono:wght=400;500;700&display=swap" rel="stylesheet">
+<!-- 加载 Chart.js 绘制专业金融回测曲线 -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- 加载 Canvas-Confetti 账户连接成功撒花特效 -->
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<!-- Chosen Palette: Deep Navy & Signal Orange (完全还原 SignalStart 金融配色体系) -->
+<!-- Application Structure Plan: 1. 顶部专业全局导航栏（带用户Hoey的状态和主菜单）；2. 顶部高级筛选器抽屉（Search Settings - 13重过滤因子）；3. 策略/信号数据交互展示主网格；4. 右下角集成实时 AI 金融咨询工单客服。以此结构，将复杂的量化指标过滤与模拟功能合并在单页。 -->
+<!-- Visualization & Content Choices: 1. Chart.js 迷你折线图(Sparklines)嵌入策略行中，展示EA净值变化；2. 用户中心(DOM交互)实现模拟器切换效果(Simulator Switch ON/OFF)，点击后数据实时转换；3. 工单支持表单结合本地状态库(JS Object Array)展示跟单提问与回复。 -->
+<!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+<style>
+    body {
+        font-family: 'Inter', sans-serif;
+        background-color: #0b1120;
+        color: #f1f5f9;
+        overflow-x: hidden;
+    }
+    .mono {
+        font-family: 'JetBrains Mono', monospace;
+    }
+    /* 美化滚动条 */
+    ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+        background: #0f172a;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: #334155;
+        border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background: #475569;
+    }
+    /* 强制画布自适应容器 */
+    .chart-container {
+        position: relative;
+        width: 100px;
+        height: 40px;
+    }
+</style>
+
+
 <!-- 顶部行情动态播报条 -->
 <div class="bg-slate-900 border-b border-slate-800 text-xs py-2 px-4 select-none">
     <div class="max-w-7xl mx-auto flex justify-between items-center overflow-hidden whitespace-nowrap">
