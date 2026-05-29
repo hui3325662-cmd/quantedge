@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <!-- ==================== 强效防浏览器缓存控制协议 ==================== -->
@@ -2155,6 +2156,12 @@
     <!-- 交互底层核心 JS 脚本 -->
     <script>
         // 初始化信号源数据库
+        // 1. 初始化 Supabase 数据库客户端连接
+const supabaseUrl = 'https://yienjuowmgyncyvezjun.supabase.co/rest/v1/';
+const supabaseKey = 'sb_publishable_xOtbQ1bpk3zFCowc536yMQ_xd8IifYB';
+
+// 建立安全连接实例 (使用 window.supabase 明确指定全局库，彻底避免浏览器报错崩溃)
+const supabase = supabaseUrl && supabaseKey ? window.supabase.createClient(supabaseUrl, supabaseKey) : null;
         const mockSignals = [
             {
                 id: 1,
