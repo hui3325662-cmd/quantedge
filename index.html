@@ -1,1 +1,1442 @@
 
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuantEdge - 智能外汇自动跟单与EA信号订阅平台</title>
+    <!-- 加载 TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 加载 FontAwesome 图标库 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- 加载 谷歌 JetBrains Mono & Inter 字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- 加载 Chart.js 绘制专业金融图表 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- 加载 Canvas-Confetti 用于账户连接成功的庆祝 -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0B0F19;
+            color: #F3F4F6;
+        }
+        .mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        /* 自定义美化滚动条 */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #111827;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #374151;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4B5563;
+        }
+        /* 霓虹发光与阴影 */
+        .neon-shadow-blue {
+            box-shadow: 0 0 15px rgba(37, 99, 235, 0.15);
+        }
+        .neon-shadow-green {
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.15);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col overflow-x-hidden">
+
+    <div class="bg-[#080B13] border-b border-slate-800 text-xs text-slate-400 py-1.5 overflow-hidden whitespace-nowrap">
+        <div class="inline-flex space-x-8 animate-marquee">
+            <span class="inline-flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span>
+                <span>EURUSD</span> <span class="text-emerald-400 mono">1.08451 (+0.12%)</span>
+            </span>
+            <span>|</span>
+            <span class="inline-flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span>
+                <span>GBPUSD</span> <span class="text-emerald-400 mono">1.26782 (+0.08%)</span>
+            </span>
+            <span>|</span>
+            <span class="inline-flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-red-500 animate-ping"></span>
+                <span>USDJPY</span> <span class="text-red-400 mono">151.342 (-0.24%)</span>
+            </span>
+            <span>|</span>
+            <span class="inline-flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span>
+                <span>XAUUSD</span> <span class="text-emerald-400 mono">2178.65 (+0.45%)</span>
+            </span>
+            <span>|</span>
+            <span class="inline-flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-slate-500"></span>
+                <span>跟单系统延迟</span> <span class="text-blue-400 mono">12.4 ms (最优)</span>
+            </span>
+        </div>
+    </div>
+
+    <nav class="sticky top-0 z-40 bg-[#0B0F19]/95 backdrop-blur-md border-b border-slate-800 px-6 py-4">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <!-- Logo -->
+            <div class="flex items-center gap-3 cursor-pointer" onclick="location.reload()">
+                <div class="w-9 h-9 bg-gradient-to-tr from-blue-600 to-emerald-500 rounded-xl flex items-center justify-center shadow-lg shadow-blue-900/40">
+                    <i class="fa-solid fa-arrows-spin text-white text-base"></i>
+                </div>
+                <div>
+                    <span class="text-lg font-bold tracking-tight text-white uppercase italic">Quant<span class="text-emerald-400">Edge</span></span>
+                    <span class="block text-[9px] text-slate-500 tracking-wider">POWERED BY MYFXBOOK TECHNOLOGIES</span>
+                </div>
+            </div>
+
+            <!-- 导航标签 -->
+            <div class="hidden md:flex gap-8 text-xs font-semibold uppercase tracking-wider text-slate-400">
+                <a href="#marketplace" class="hover:text-white transition-colors flex items-center gap-1.5 text-white">
+                    <i class="fa-solid fa-chart-line text-blue-500"></i> 信号大厅
+                </a>
+                <a href="#about-platform" class="hover:text-white transition-colors flex items-center gap-1.5">
+                    <i class="fa-solid fa-circle-info"></i> 托管原理
+                </a>
+                <a href="#simulator-section" class="hover:text-white transition-colors flex items-center gap-1.5">
+                    <i class="fa-solid fa-calculator"></i> 收益模拟
+                </a>
+                <a href="#pricing-section" class="hover:text-white transition-colors flex items-center gap-1.5">
+                    <i class="fa-solid fa-tags"></i> 资费说明
+                </a>
+            </div>
+
+            <!-- 功能操作按钮 -->
+            <div class="flex items-center gap-3">
+                <button onclick="openWizard('provider')" class="hidden sm:inline-flex border border-slate-700 hover:border-slate-500 px-4 py-2 rounded-lg text-xs font-semibold text-slate-300 transition-all">
+                    提供信号赚分成
+                </button>
+                <button onclick="openWizard('follower')" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-xs font-semibold shadow-lg shadow-blue-900/30 transition-all flex items-center gap-1.5">
+                    <i class="fa-solid fa-plug"></i> 绑定我的跟单账户
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <header class="relative py-20 px-6 overflow-hidden border-b border-slate-800">
+        <!-- 粒子星空背景感 -->
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,_#1E293B_0%,_transparent_60%)] opacity-30"></div>
+        <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-500/5 rounded-full blur-[100px]"></div>
+        
+        <div class="max-w-7xl mx-auto grid lg:grid-cols-12 gap-12 items-center relative z-10">
+            <!-- 左侧核心文案 -->
+            <div class="lg:col-span-7 space-y-6 text-left">
+                <div class="inline-flex items-center gap-2 px-3 py-1 bg-blue-500/10 border border-blue-500/30 rounded-full text-blue-400 text-xs font-semibold">
+                    <i class="fa-solid fa-shield-halved text-[10px]"></i> 全自动跟单系统：无需自备VPS，毫秒级复制
+                </div>
+                <h1 class="text-4xl md:text-5xl font-black leading-tight tracking-tight text-white">
+                    复制顶级交易大师的收益<br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400">资金全程留存您自己的账户</span>
+                </h1>
+                <p class="text-slate-400 text-base md:text-lg font-light leading-relaxed max-w-2xl">
+                    QuantEdge 是行业领先的多经纪商外汇信号复制系统。无需手动下载策略，只需将您的 MT4/MT5 账户与顶级策略同步，即可实现 24/5 云托管自动交易。
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 pt-4">
+                    <a href="#marketplace" class="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 text-white px-8 py-4 rounded-xl font-bold text-sm text-center shadow-lg shadow-blue-900/50 transition-all">
+                        浏览全部实盘策略
+                    </a>
+                    <a href="#about-platform" class="bg-slate-800/80 border border-slate-700 hover:bg-slate-700 text-slate-200 px-8 py-4 rounded-xl font-bold text-sm text-center transition-all flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-play text-xs text-blue-400"></i> 看懂工作流程
+                    </a>
+                </div>
+                <!-- 实时平台状态快报 -->
+                <div class="grid grid-cols-3 gap-6 pt-6 border-t border-slate-800/60">
+                    <div>
+                        <p class="text-2xl font-bold text-white mono" id="stat-copiers">14,285+</p>
+                        <p class="text-xs text-slate-500">全球跟单用户</p>
+                    </div>
+                    <div>
+                        <p class="text-2xl font-bold text-white mono" id="stat-volume">$320.4M</p>
+                        <p class="text-xs text-slate-500">管理的资产规模 (AUM)</p>
+                    </div>
+                    <div>
+                        <p class="text-2xl font-bold text-white mono" id="stat-latency">&lt; 15ms</p>
+                        <p class="text-xs text-slate-500">平均订单复制延迟</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 右侧视觉预览：展示三个经典卖点卡片 -->
+            <div class="lg:col-span-5 grid gap-4">
+                <div class="bg-slate-900/60 border border-slate-800 p-5 rounded-2xl flex gap-4 items-start hover:border-blue-500/40 transition-all">
+                    <div class="p-3 bg-blue-500/10 rounded-xl text-blue-400">
+                        <i class="fa-solid fa-server text-xl"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-slate-200 text-sm">云托管无缝架构</h4>
+                        <p class="text-xs text-slate-400 mt-1">无需任何VPS、无需开启电脑。全天候监控信号源，实时成交并保持高同步。支持各大平台和经纪商。</p>
+                    </div>
+                </div>
+                <div class="bg-slate-900/60 border border-slate-800 p-5 rounded-2xl flex gap-4 items-start hover:border-emerald-500/40 transition-all">
+                    <div class="p-3 bg-emerald-500/10 rounded-xl text-emerald-400">
+                        <i class="fa-solid fa-user-secret text-xl"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-slate-200 text-sm">绝对的安全与自主</h4>
+                        <p class="text-xs text-slate-400 mt-1">您只需提供只读只读（Investor）密码，我们的系统不具备资金划拨或提款权限。资金掌控在您自己手中。</p>
+                    </div>
+                </div>
+                <div class="bg-slate-900/60 border border-slate-800 p-5 rounded-2xl flex gap-4 items-start hover:border-amber-500/40 transition-all">
+                    <div class="p-3 bg-amber-500/10 rounded-xl text-amber-400">
+                        <i class="fa-solid fa-chart-bar text-xl"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-slate-200 text-sm">Myfxbook 行业审计基准</h4>
+                        <p class="text-xs text-slate-400 mt-1">拒绝虚假P图，所有策略数据经过平台权威追踪、审计。实时计算盈亏率、绝对最大回撤，拒绝隐瞒业绩。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main id="marketplace" class="py-16 px-6 max-w-7xl mx-auto w-full flex-grow">
+        <!-- 控制栏：搜索、筛选和排序 -->
+        <div class="bg-[#111827] border border-slate-800 rounded-2xl p-6 mb-8 shadow-xl">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
+                <div>
+                    <h2 class="text-xl font-bold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-compass text-blue-500"></i> 实盘策略交易信号库
+                    </h2>
+                    <p class="text-xs text-slate-400 mt-1">通过客观指标实时对提供商进行综合排名</p>
+                </div>
+                
+                <!-- 搜索框 -->
+                <div class="relative w-full md:w-80">
+                    <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-500">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </span>
+                    <input type="text" id="search-input" onkeyup="filterSignals()" placeholder="搜索策略名称 / 算法类别..." class="w-full bg-[#0B0F19] text-sm text-slate-200 pl-9 pr-4 py-2.5 rounded-xl border border-slate-800 focus:outline-none focus:border-blue-500 transition-all">
+                </div>
+            </div>
+
+            <!-- 多重筛选矩阵 -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4 border-t border-slate-800">
+                <!-- 筛选 1: 风险评级 -->
+                <div>
+                    <label class="block text-[10px] uppercase tracking-wider text-slate-500 font-bold mb-1.5">风险评级 (最大回撤)</label>
+                    <select id="risk-filter" onchange="filterSignals()" class="w-full bg-[#0B0F19] border border-slate-800 rounded-lg text-xs text-slate-300 px-3 py-2 focus:outline-none focus:border-blue-500">
+                        <option value="all">不限风险级别 (全部)</option>
+                        <option value="low">低风险 (回撤 &lt; 15%)</option>
+                        <option value="med">中风险 (回撤 15% - 30%)</option>
+                        <option value="high">高收益/高波动 (回撤 &gt; 30%)</option>
+                    </select>
+                </div>
+
+                <!-- 筛选 2: 交易平台/类型 -->
+                <div>
+                    <label class="block text-[10px] uppercase tracking-wider text-slate-500 font-bold mb-1.5">策略特性 / 种类</label>
+                    <select id="type-filter" onchange="filterSignals()" class="w-full bg-[#0B0F19] border border-slate-800 rounded-lg text-xs text-slate-300 px-3 py-2 focus:outline-none focus:border-blue-500">
+                        <option value="all">不限策略类型 (全部)</option>
+                        <option value="scalping">剥头皮 (Scalper)</option>
+                        <option value="trend">趋势跟踪 (Trend)</option>
+                        <option value="grid">网格/马丁对冲 (Grid/Hedge)</option>
+                        <option value="multicurrency">多货币多系统组合</option>
+                    </select>
+                </div>
+
+                <!-- 筛选 3: 最小存活周期 -->
+                <div>
+                    <label class="block text-[10px] uppercase tracking-wider text-slate-500 font-bold mb-1.5">最低实盘存活天数</label>
+                    <select id="days-filter" onchange="filterSignals()" class="w-full bg-[#0B0F19] border border-slate-800 rounded-lg text-xs text-slate-300 px-3 py-2 focus:outline-none focus:border-blue-500">
+                        <option value="all">不限天数 (全部)</option>
+                        <option value="30">&gt; 30 天</option>
+                        <option value="90">&gt; 90 天</option>
+                        <option value="180">&gt; 180 天</option>
+                        <option value="365">&gt; 365 天 (经受长期检验)</option>
+                    </select>
+                </div>
+
+                <!-- 排序方式 -->
+                <div>
+                    <label class="block text-[10px] uppercase tracking-wider text-slate-500 font-bold mb-1.5">排序方式 (升/降序)</label>
+                    <select id="sort-select" onchange="filterSignals()" class="w-full bg-[#0B0F19] border border-slate-800 rounded-lg text-xs text-slate-300 px-3 py-2 focus:outline-none focus:border-blue-500">
+                        <option value="rank">默认排名 (智能优选)</option>
+                        <option value="gain-desc">收益率：从高到低</option>
+                        <option value="drawdown-asc">回撤率：从低到高</option>
+                        <option value="subs-desc">订阅人数：从多到少</option>
+                        <option value="price-asc">订阅价格：从低到高</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- 信号表格展示 (大屏幕) / 卡片化展示 (小屏幕) -->
+        <div class="overflow-hidden bg-[#111827] border border-slate-800 rounded-2xl shadow-xl">
+            <div class="overflow-x-auto">
+                <table class="min-w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-[#080B13] border-b border-slate-800 text-[10px] uppercase tracking-widest text-slate-500 font-semibold">
+                            <th class="py-4 px-6 text-center">排名</th>
+                            <th class="py-4 px-6">信号源名称</th>
+                            <th class="py-4 px-6">总收益率 (Gain)</th>
+                            <th class="py-4 px-6">最大回撤 (DD)</th>
+                            <th class="py-4 px-6">实盘资金</th>
+                            <th class="py-4 px-6">运行天数</th>
+                            <th class="py-4 px-6">跟单人数</th>
+                            <th class="py-4 px-6">风险等级</th>
+                            <th class="py-4 px-6">订阅资费</th>
+                            <th class="py-4 px-6 text-center">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="signals-tbody" class="divide-y divide-slate-800 text-sm">
+                        <!-- 动态载入列表 -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- 数据为空提示 -->
+            <div id="no-data-msg" class="hidden py-16 text-center text-slate-500">
+                <i class="fa-solid fa-face-frown text-4xl mb-3"></i>
+                <p>未找到符合条件的策略，请更改筛选选项后重试。</p>
+            </div>
+        </div>
+    </main>
+
+    <div id="detail-modal" class="fixed inset-0 z-50 hidden bg-[#050810]/90 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-[#111827] border border-slate-800 rounded-3xl w-full max-w-5xl shadow-2xl relative overflow-hidden my-8 max-h-[90vh] flex flex-col">
+            <!-- 头部 -->
+            <div class="flex justify-between items-center border-b border-slate-800 px-8 py-5 bg-[#080B13]">
+                <div class="flex items-center gap-3">
+                    <span id="modal-strategy-badge" class="px-2 py-0.5 rounded text-[10px] font-bold text-black uppercase bg-emerald-400">MASTER</span>
+                    <h3 id="modal-strategy-name" class="text-xl font-bold text-white">Strategy Details</h3>
+                    <span id="modal-strategy-platform" class="text-xs text-slate-500 mono">MT4 / Pepperstone</span>
+                </div>
+                <button onclick="closeModal()" class="text-slate-400 hover:text-white transition-colors text-xl">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- 弹窗内容滚动区域 -->
+            <div class="p-8 overflow-y-auto flex-grow space-y-8">
+                <!-- 第一板块：大图表展示与三大最核心指标 -->
+                <div class="grid lg:grid-cols-12 gap-8 items-start">
+                    <!-- 左侧：真实 Chart.js 折线图 -->
+                    <div class="lg:col-span-8 bg-[#0B0F19] border border-slate-800 p-5 rounded-2xl">
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-xs font-semibold uppercase tracking-wider text-slate-400"><i class="fa-solid fa-chart-area text-blue-500 mr-1.5"></i> 净值增长 (TWR 时间加权) 曲线图</span>
+                            <div class="flex gap-2 text-[10px] uppercase font-bold text-slate-500">
+                                <span class="px-2 py-0.5 bg-slate-800 rounded text-slate-300">实盘追踪</span>
+                                <span class="px-2 py-0.5 bg-blue-900/40 rounded text-blue-400">每日更新</span>
+                            </div>
+                        </div>
+                        <div class="h-64 relative">
+                            <canvas id="modal-equity-chart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- 右侧：高级跟单决策器 (内置计算本金倍数风险) -->
+                    <div class="lg:col-span-4 bg-slate-900/60 border border-slate-800 p-6 rounded-2xl flex flex-col justify-between h-full">
+                        <div>
+                            <h4 class="font-bold text-sm text-white mb-1">🎛️ 跟单风控计算器</h4>
+                            <p class="text-xs text-slate-400 mb-4">模拟该策略同步到您的账户后的效果：</p>
+                            
+                            <!-- 本金输入 -->
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-[11px] text-slate-400 font-semibold mb-1">1. 设定您的可用本金 (USD)</label>
+                                    <div class="relative">
+                                        <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-500 font-bold">$</span>
+                                        <input type="number" id="sim-balance" value="10000" oninput="runSimulation()" class="w-full bg-[#0B0F19] text-sm text-white pl-7 pr-3 py-2 rounded-lg border border-slate-800 focus:outline-none focus:border-blue-500">
+                                    </div>
+                                </div>
+
+                                <!-- 倍数滑块 -->
+                                <div>
+                                    <div class="flex justify-between text-[11px] text-slate-400 font-semibold mb-1">
+                                        <span>2. 跟单复制倍数 (Multiplier)</span>
+                                        <span id="sim-multiplier-val" class="text-blue-400 font-bold">1.0x</span>
+                                    </div>
+                                    <input type="range" id="sim-multiplier" min="0.1" max="3.0" step="0.1" value="1.0" oninput="runSimulation()" class="w-full accent-blue-500">
+                                    <div class="flex justify-between text-[9px] text-slate-600 mt-1">
+                                        <span>0.1x (微型风险)</span>
+                                        <span>3.0x (高频冲锋)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 模拟计算结果输出 -->
+                        <div class="mt-6 pt-4 border-t border-slate-800 space-y-3">
+                            <div class="flex justify-between text-xs">
+                                <span class="text-slate-500">预计平均月回报:</span>
+                                <span id="sim-profit" class="text-emerald-400 font-bold font-mono">$0.00</span>
+                            </div>
+                            <div class="flex justify-between text-xs">
+                                <span class="text-slate-500">预计历史最大风险:</span>
+                                <span id="sim-drawdown" class="text-red-400 font-bold font-mono">$0.00</span>
+                            </div>
+                            <!-- 风险红绿条提示 -->
+                            <div id="sim-risk-warning" class="text-[10px] p-2 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 rounded-lg text-center mt-2">
+                                <i class="fa-solid fa-circle-check"></i> 该风控配置表现安全。
+                            </div>
+                        </div>
+
+                        <div class="mt-6">
+                            <button id="modal-subscribe-btn" onclick="startSetupFromModal()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl text-xs transition-all uppercase tracking-wider shadow-lg shadow-blue-900/30">
+                                立即跟单此信号 (Cloud Copy)
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 第二板块：核心交易指标面板 (Myfxbook 专业级) -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="bg-[#0B0F19] border border-slate-800 p-4 rounded-xl">
+                        <span class="text-[10px] text-slate-500 uppercase tracking-widest font-semibold">盈利因子 (Profit Factor)</span>
+                        <p id="stat-pf" class="text-lg font-bold text-white mono mt-1">1.84</p>
+                    </div>
+                    <div class="bg-[#0B0F19] border border-slate-800 p-4 rounded-xl">
+                        <span class="text-[10px] text-slate-500 uppercase tracking-widest font-semibold">夏普比率 (Sharpe Ratio)</span>
+                        <p id="stat-sharpe" class="text-lg font-bold text-white mono mt-1">2.41</p>
+                    </div>
+                    <div class="bg-[#0B0F19] border border-slate-800 p-4 rounded-xl">
+                        <span class="text-[10px] text-slate-500 uppercase tracking-widest font-semibold">历史胜率 (Win Rate)</span>
+                        <p id="stat-winrate" class="text-lg font-bold text-white mono mt-1">73.2%</p>
+                    </div>
+                    <div class="bg-[#0B0F19] border border-slate-800 p-4 rounded-xl">
+                        <span class="text-[10px] text-slate-500 uppercase tracking-widest font-semibold">累计交易笔数 (Trades)</span>
+                        <p id="stat-trades" class="text-lg font-bold text-white mono mt-1">821 次</p>
+                    </div>
+                </div>
+
+                <!-- 第三板块：月度表现矩阵 (Monthly Returns Table Grid) -->
+                <div>
+                    <h4 class="font-bold text-sm text-white mb-3 flex items-center gap-1.5">
+                        <i class="fa-solid fa-calendar text-emerald-500"></i> 月度真实回报率历史审计 (时间加权)
+                    </h4>
+                    <div class="overflow-x-auto rounded-xl border border-slate-800">
+                        <table class="w-full text-center text-xs">
+                            <thead>
+                                <tr class="bg-[#080B13] border-b border-slate-800 text-slate-400 font-bold">
+                                    <th class="py-3 px-2">年份</th>
+                                    <th class="py-3 px-2">1月</th>
+                                    <th class="py-3 px-2">2月</th>
+                                    <th class="py-3 px-2">3月</th>
+                                    <th class="py-3 px-2">4月</th>
+                                    <th class="py-3 px-2">5月</th>
+                                    <th class="py-3 px-2">6月</th>
+                                    <th class="py-3 px-2">7月</th>
+                                    <th class="py-3 px-2">8月</th>
+                                    <th class="py-3 px-2">9月</th>
+                                    <th class="py-3 px-2">10月</th>
+                                    <th class="py-3 px-2">11月</th>
+                                    <th class="py-3 px-2">12月</th>
+                                    <th class="py-3 px-2 bg-emerald-500/5 text-emerald-400 font-bold">年度总计</th>
+                                </tr>
+                            </thead>
+                            <tbody id="modal-monthly-tbody" class="divide-y divide-slate-800 font-mono text-slate-300">
+                                <!-- 动态插入 -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="wizard-modal" class="fixed inset-0 z-50 hidden bg-[#050810]/95 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="bg-[#111827] border border-slate-800 rounded-3xl w-full max-w-lg shadow-2xl relative overflow-hidden">
+            <!-- 头部 -->
+            <div class="flex justify-between items-center border-b border-slate-800 px-6 py-4 bg-[#080B13]">
+                <h3 class="text-base font-bold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-cloud-arrow-up text-blue-500"></i> <span id="wizard-title">绑定我的 MT4/MT5 托管跟单账户</span>
+                </h3>
+                <button onclick="closeWizard()" class="text-slate-400 hover:text-white transition-colors">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="p-6">
+                <!-- 步骤点指示器 -->
+                <div class="flex justify-between items-center mb-8 px-4">
+                    <div class="flex flex-col items-center">
+                        <div id="step-dot-1" class="w-7 h-7 bg-blue-600 rounded-full flex items-center justify-center text-xs font-bold text-white transition-colors">1</div>
+                        <span class="text-[9px] text-slate-400 mt-1 font-semibold">选择平台</span>
+                    </div>
+                    <div class="flex-grow h-0.5 bg-slate-800 mx-2" id="step-line-1"></div>
+                    <div class="flex flex-col items-center">
+                        <div id="step-dot-2" class="w-7 h-7 bg-slate-800 rounded-full flex items-center justify-center text-xs font-bold text-slate-400 transition-colors">2</div>
+                        <span class="text-[9px] text-slate-500 mt-1 font-semibold">服务器鉴权</span>
+                    </div>
+                    <div class="flex-grow h-0.5 bg-slate-800 mx-2" id="step-line-2"></div>
+                    <div class="flex flex-col items-center">
+                        <div id="step-dot-3" class="w-7 h-7 bg-slate-800 rounded-full flex items-center justify-center text-xs font-bold text-slate-400 transition-colors">3</div>
+                        <span class="text-[9px] text-slate-500 mt-1 font-semibold">云端授权</span>
+                    </div>
+                </div>
+
+                <!-- 步骤 1 内容: 平台、经纪商选择 -->
+                <div id="step-content-1" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-400 mb-2">1. 交易软件版本</label>
+                        <div class="grid grid-cols-2 gap-4">
+                            <label class="border-2 border-blue-600 bg-blue-500/5 p-4 rounded-xl flex flex-col items-center cursor-pointer hover:bg-slate-800 transition-all text-center relative">
+                                <input type="radio" name="platform-type" value="MT4" checked class="absolute top-2 right-2 accent-blue-500">
+                                <i class="fa-solid fa-cubes text-2xl text-blue-400 mb-2"></i>
+                                <span class="text-sm font-bold text-white">MetaTrader 4</span>
+                                <span class="text-[10px] text-slate-500 mt-1">最经典的稳定版本</span>
+                            </label>
+                            <label class="border border-slate-800 p-4 rounded-xl flex flex-col items-center cursor-pointer hover:border-slate-700 hover:bg-slate-800 transition-all text-center relative">
+                                <input type="radio" name="platform-type" value="MT5" class="absolute top-2 right-2 accent-blue-500">
+                                <i class="fa-solid fa-cubes-stacked text-2xl text-emerald-400 mb-2"></i>
+                                <span class="text-sm font-bold text-white">MetaTrader 5</span>
+                                <span class="text-[10px] text-slate-500 mt-1">高速度多功能版本</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-400 mb-1.5">2. 经纪商服务器 (选择或搜索您的Broker)</label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-500">
+                                <i class="fa-solid fa-server"></i>
+                            </span>
+                            <input type="text" id="broker-search" placeholder="输入：IC Markets, Pepperstone, XM..." class="w-full bg-[#0B0F19] text-sm text-slate-200 pl-9 pr-3 py-2.5 rounded-lg border border-slate-800 focus:outline-none focus:border-blue-500">
+                        </div>
+                        <p class="text-[10px] text-slate-500 mt-1">支持全球任意主流MT4/MT5经纪商系统连接对接。</p>
+                    </div>
+                </div>
+
+                <!-- 步骤 2 内容: 输入账号和密码 -->
+                <div id="step-content-2" class="space-y-4 hidden">
+                    <div class="p-3 bg-amber-500/10 border border-amber-500/30 rounded-xl text-amber-400 text-xs leading-relaxed flex items-start gap-2">
+                        <i class="fa-solid fa-triangle-exclamation text-sm mt-0.5"></i>
+                        <span><strong>安全须知</strong>：平台连接您跟单账户时仅作<strong>交易镜像复制</strong>。作为跟单用户，您需提供账户的只读观摩密码。平台无法进行出金等资金操作。</span>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-400 mb-1.5">MT4 / MT5 账户登录ID (Login ID)</label>
+                        <input type="number" id="wizard-account-id" placeholder="例如: 8439201" class="w-full bg-[#0B0F19] text-sm text-slate-200 px-3 py-2.5 rounded-lg border border-slate-800 focus:outline-none focus:border-blue-500">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-400 mb-1.5">只读密码 / 观摩密码 (Investor Password)</label>
+                        <div class="relative">
+                            <input type="password" id="wizard-password" placeholder="请输入您的观摩密码" class="w-full bg-[#0B0F19] text-sm text-slate-200 px-3 py-2.5 rounded-lg border border-slate-800 focus:outline-none focus:border-blue-500">
+                            <span class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-500 cursor-pointer" onclick="togglePasswordVisibility('wizard-password')">
+                                <i class="fa-solid fa-eye" id="toggle-eye"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 步骤 3 内容: 连接与跟单选项设置 -->
+                <div id="step-content-3" class="space-y-4 hidden">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-400 mb-1.5">初始分配跟单比重系数</label>
+                        <select id="wizard-follow-ratio" class="w-full bg-[#0B0F19] border border-slate-800 rounded-lg text-sm text-slate-300 px-3 py-2.5 focus:outline-none focus:border-blue-500">
+                            <option value="1.0">1.0x (原样镜像复制)</option>
+                            <option value="0.5">0.5x (轻仓风控，减半配置)</option>
+                            <option value="2.0">2.0x (极限利润，双倍放大)</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-400 mb-1.5">设置强制熔断止损比例 (基于账户余额)</label>
+                        <select id="wizard-force-stop" class="w-full bg-[#0B0F19] border border-slate-800 rounded-lg text-sm text-slate-300 px-3 py-2.5 focus:outline-none focus:border-blue-500">
+                            <option value="20">当整体回撤达到 20% 时全面止损并切断跟单</option>
+                            <option value="35">当整体回撤达到 35% 时全面止损并切断跟单</option>
+                            <option value="50">当整体回撤达到 50% 时全面止损并切断跟单</option>
+                            <option value="none">不设置硬性风控止损 (高阶风险)</option>
+                        </select>
+                    </div>
+
+                    <div class="flex items-center gap-2 pt-2">
+                        <input type="checkbox" id="terms-check" checked class="accent-blue-500">
+                        <label for="terms-check" class="text-xs text-slate-400">我已完全阅读并同意《跟单平台服务风险告知书与免责声明》。</label>
+                    </div>
+                </div>
+
+                <!-- 步骤按钮控制区 -->
+                <div class="flex justify-between items-center mt-8 pt-4 border-t border-slate-800">
+                    <button id="wizard-prev-btn" onclick="prevStep()" class="invisible text-xs font-semibold text-slate-400 hover:text-white transition-colors">
+                        <i class="fa-solid fa-chevron-left mr-1"></i> 上一步
+                    </button>
+                    <button id="wizard-next-btn" onclick="nextStep()" class="bg-blue-600 hover:bg-blue-500 text-white px-6 py-2.5 rounded-xl text-xs font-bold transition-all shadow-md">
+                        下一步 <i class="fa-solid fa-chevron-right ml-1"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section id="simulator-section" class="py-16 px-6 bg-[#111827] border-y border-slate-800">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <h2 class="text-3xl font-black text-white">🎛️ 组合跟单多变量模拟器</h2>
+                <p class="text-slate-400 text-sm mt-2">在真实跟单前，通过我们严谨的回测数据库，模拟推演您的资金在不同策略搭配下的表现曲线。</p>
+            </div>
+
+            <div class="grid lg:grid-cols-3 gap-8">
+                <!-- 模拟设置框 -->
+                <div class="lg:col-span-1 bg-[#0B0F19] border border-slate-800 p-6 rounded-2xl flex flex-col justify-between">
+                    <div class="space-y-6">
+                        <h3 class="font-bold text-base text-white border-b border-slate-800 pb-3 flex items-center gap-2">
+                            <i class="fa-solid fa-sliders text-blue-500"></i> 参数设置
+                        </h3>
+                        <!-- 准备投入的本金 -->
+                        <div>
+                            <label class="block text-xs font-bold text-slate-400 mb-1.5">模拟交易资金规模</label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-500 font-bold">$</span>
+                                <input type="number" id="full-sim-balance" value="20000" oninput="runFullPlatformSimulation()" class="w-full bg-[#111827] text-sm text-white pl-7 pr-3 py-2 rounded-lg border border-slate-800 focus:outline-none focus:border-blue-500">
+                            </div>
+                        </div>
+
+                        <!-- 跟随的策略选择 -->
+                        <div>
+                            <label class="block text-xs font-bold text-slate-400 mb-1.5">选择主跟单策略</label>
+                            <select id="full-sim-strategy" onchange="runFullPlatformSimulation()" class="w-full bg-[#111827] border border-slate-800 rounded-lg text-sm text-slate-300 px-3 py-2 focus:outline-none focus:border-blue-500">
+                                <!-- 选项将通过 JS 动态填充 -->
+                            </select>
+                        </div>
+
+                        <!-- 跟单倍数 -->
+                        <div>
+                            <div class="flex justify-between text-xs font-bold text-slate-400 mb-1">
+                                <span>设定复制系数 (Multiplier)</span>
+                                <span id="full-sim-ratio-val" class="text-emerald-400 font-bold">1.2x</span>
+                            </div>
+                            <input type="range" id="full-sim-ratio" min="0.1" max="3.0" step="0.1" value="1.2" oninput="runFullPlatformSimulation()" class="w-full accent-blue-500">
+                        </div>
+                    </div>
+
+                    <!-- 快速推荐配置包 -->
+                    <div class="pt-6 border-t border-slate-800 mt-6 space-y-2">
+                        <span class="block text-[10px] text-slate-500 uppercase tracking-wider font-bold">一键加载风控预设</span>
+                        <div class="flex gap-2">
+                            <button onclick="applyPreset(10000, 0, 0.8)" class="flex-1 py-1.5 bg-slate-800 hover:bg-slate-700 rounded text-[10px] text-slate-300 font-bold">低风险保守型</button>
+                            <button onclick="applyPreset(20000, 1, 1.2)" class="flex-1 py-1.5 bg-slate-800 hover:bg-slate-700 rounded text-[10px] text-slate-300 font-bold">中风险平衡型</button>
+                            <button onclick="applyPreset(50000, 2, 1.5)" class="flex-1 py-1.5 bg-slate-800 hover:bg-slate-700 rounded text-[10px] text-slate-300 font-bold">高收益积极型</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 模拟输出主看板 -->
+                <div class="lg:col-span-2 bg-[#0B0F19] border border-slate-800 p-6 rounded-2xl flex flex-col justify-between">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="font-bold text-sm text-slate-300 uppercase tracking-wider"><i class="fa-solid fa-chart-line text-emerald-400 mr-1"></i> 回测历史预期增长收益图</h3>
+                        <span class="text-[10px] bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded font-bold uppercase tracking-wider">实盘模拟审计</span>
+                    </div>
+
+                    <!-- 动态预测折线图 -->
+                    <div class="h-64 relative bg-[#111827] rounded-xl p-3 border border-slate-800/50 mb-6">
+                        <canvas id="platform-simulation-chart"></canvas>
+                    </div>
+
+                    <!-- 三大汇总卡片 -->
+                    <div class="grid grid-cols-3 gap-4">
+                        <div class="bg-[#111827] border border-slate-800 p-4 rounded-xl text-center">
+                            <span class="text-[10px] text-slate-500 font-semibold block">预计年度总收益</span>
+                            <span id="full-sim-out-profit" class="text-xl font-bold text-emerald-400 mt-1 block font-mono">+$12,450.00</span>
+                        </div>
+                        <div class="bg-[#111827] border border-slate-800 p-4 rounded-xl text-center">
+                            <span class="text-[10px] text-slate-500 font-semibold block">预计历史最大回撤额</span>
+                            <span id="full-sim-out-dd" class="text-xl font-bold text-red-400 mt-1 block font-mono">-$1,840.00</span>
+                        </div>
+                        <div class="bg-[#111827] border border-slate-800 p-4 rounded-xl text-center">
+                            <span class="text-[10px] text-slate-500 font-semibold block">风险/回报 评级</span>
+                            <span id="full-sim-out-rate" class="text-xl font-bold text-blue-400 mt-1 block font-mono">EXCELLENT</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="pricing-section" class="py-20 px-6 max-w-7xl mx-auto w-full">
+        <div class="text-center max-w-2xl mx-auto mb-16">
+            <h2 class="text-3xl font-black text-white">极简透明的资费标准</h2>
+            <p class="text-slate-400 text-sm mt-2">没有任何隐性收费。我们只为最顶尖的技术支持与极致稳定的跟单体验保驾护航。</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <!-- 方案 1: 跟单跟随者 (Signal Follower) -->
+            <div class="bg-[#111827] border border-slate-800 p-8 rounded-3xl relative overflow-hidden group hover:border-blue-500/50 transition-all flex flex-col justify-between">
+                <div class="space-y-6">
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs font-bold uppercase tracking-widest text-blue-400 bg-blue-500/10 px-3 py-1 rounded-full">Signal Follower</span>
+                        <span class="text-[10px] text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded-full">新用户首周 $1 体验</span>
+                    </div>
+                    <div>
+                        <span class="text-4xl font-black text-white">$25</span>
+                        <span class="text-slate-400 text-xs font-semibold"> / 月 (平台云通道费)</span>
+                    </div>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        用于支持 24/5 毫秒级跟单核心及 VPS 节点托管。订阅信号源的订阅费需另外支付。
+                    </p>
+                    <ul class="space-y-3 text-xs text-slate-300">
+                        <li><i class="fa-solid fa-check text-blue-500 mr-2"></i> 绑定任意主流 MT4/MT5 账户</li>
+                        <li><i class="fa-solid fa-check text-blue-500 mr-2"></i> 自定义比例及强风控参数设置</li>
+                        <li><i class="fa-solid fa-check text-blue-500 mr-2"></i> 7x24 交易同步状态心跳检测</li>
+                        <li><i class="fa-solid fa-check text-blue-500 mr-2"></i> Myfxbook 级别深度数据追溯图表</li>
+                    </ul>
+                </div>
+                <div class="mt-8">
+                    <button onclick="openWizard('follower')" class="w-full py-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl text-xs uppercase tracking-wider transition-all shadow-md">立即开通跟单</button>
+                </div>
+            </div>
+
+            <!-- 方案 2: 信号提供商 (Signal Provider) -->
+            <div class="bg-[#111827] border-2 border-emerald-500/40 p-8 rounded-3xl relative overflow-hidden flex flex-col justify-between shadow-xl shadow-emerald-950/10">
+                <div class="absolute top-0 right-0 bg-emerald-500 text-black text-[9px] font-black uppercase tracking-widest px-4 py-1 rounded-bl-xl">HOT PROMOTION</div>
+                <div class="space-y-6">
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs font-bold uppercase tracking-widest text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-full font-mono">Signal Provider</span>
+                    </div>
+                    <div>
+                        <span class="text-4xl font-black text-white">30%</span>
+                        <span class="text-slate-400 text-xs font-semibold"> 仅提取订阅收入分成</span>
+                    </div>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        我们将为您提供全托管的 White Label 策略发布平台。您只需连接账户，设置 $30 - $500/月的订阅价格，平台自动代扣分成。
+                    </p>
+                    <ul class="space-y-3 text-xs text-slate-300">
+                        <li><i class="fa-solid fa-check text-emerald-500 mr-2"></i> 一键加入全球跟单排行榜</li>
+                        <li><i class="fa-solid fa-check text-emerald-500 mr-2"></i> 30天或50笔实盘交易记录即可上榜</li>
+                        <li><i class="fa-solid fa-check text-emerald-500 mr-2"></i> 专属提供商看板，粉丝管理与结算分析</li>
+                        <li><i class="fa-solid fa-check text-emerald-500 mr-2"></i> 独家佣金自动实时提现机制</li>
+                    </ul>
+                </div>
+                <div class="mt-8">
+                    <button onclick="openWizard('provider')" class="w-full py-4 bg-emerald-500 hover:bg-emerald-600 text-black font-bold rounded-xl text-xs uppercase tracking-wider transition-all shadow-md">立刻发布信号</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="toast-container" class="fixed bottom-6 right-6 z-50 space-y-2"></div>
+
+    <footer class="bg-[#080B13] border-t border-slate-800 py-12 px-6">
+        <div class="max-w-7xl mx-auto space-y-8">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-arrows-spin text-white"></i>
+                    </div>
+                    <span class="text-base font-bold text-white uppercase tracking-wider">QuantEdge 自动化交易门户</span>
+                </div>
+                <div class="flex gap-6 text-xs text-slate-500">
+                    <a href="#" class="hover:text-slate-300">服务条款</a>
+                    <a href="#" class="hover:text-slate-300">隐私协定</a>
+                    <a href="#" class="hover:text-slate-300">合规审计证明</a>
+                    <a href="#" class="hover:text-slate-300">联系支持</a>
+                </div>
+            </div>
+
+            <!-- 极端重要：外汇交易合规风险警示 -->
+            <div class="pt-8 border-t border-slate-800 text-[10px] text-slate-500 leading-relaxed space-y-4">
+                <p class="uppercase tracking-wider font-bold text-slate-400">🚨 高风险投资免责声明：保证金交易涉及高风险</p>
+                <p>
+                    保证金外汇、差价合约（CFD）等金融衍生品交易存在高度的不确定性与极大的亏损风险，并不适合所有投资者。高杠杆既可能放大您的收益，也可能成倍放大您的亏损。在使用 QuantEdge 平台上的任何第三方 EA 策略、交易信号或复制跟单功能前，请务必充分理解其投资原理、风险限额并充分评估您个人的风险承受承受能力。
+                </p>
+                <p>
+                    <strong>历史表现无法绝对保证未来的盈利。</strong> 平台显示的任何收益曲线、回撤指标或历史回测报告均由信号提供方或 Myfxbook 独立算法客观展示，不构成 QuantEdge 对您作出的任何盈利暗示、预期担保或绝对保本承诺。您跟单交易产生的所有账户盈亏，均由您自行承担。
+                </p>
+                <p class="text-center text-slate-600 uppercase tracking-widest font-bold pt-4">© 2026 QUANTEDGE TECHNOLOGIES LTD. ALL RIGHTS RESERVED. POWERED BY MYFXBOOK INFRASTRUCTURE.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const mockSignals = [
+            {
+                id: 1,
+                name: "Zeus Scalper Pro",
+                type: "scalping",
+                typeLabel: "夜间快速剥头皮",
+                gain: 145.2,
+                drawdown: 8.4,
+                balance: 12500,
+                days: 280,
+                subscribers: 1420,
+                risk: "low",
+                riskLabel: "保守低回撤",
+                price: 49,
+                pf: 2.12,
+                sharpe: 2.85,
+                winRate: 81.5,
+                trades: 1250,
+                history: [0, 12, 25, 38, 52, 60, 55, 68, 85, 98, 112, 130, 145.2],
+                monthly: [
+                    { year: 2025, jan: 8.5, feb: 9.1, mar: 10.2, apr: -2.1, may: 7.8, jun: 9.4, jul: 8.1, aug: -1.5, sep: 11.2, oct: 12.3, nov: 8.9, dec: 10.5, total: 92.4 },
+                    { year: 2026, jan: 7.2, feb: 8.4, mar: 9.1, apr: 11.2, may: 13.5, jun: "", jul: "", aug: "", sep: "", oct: "", nov: "", dec: "", total: 52.8 }
+                ]
+            },
+            {
+                id: 2,
+                name: "Infinity Trend Hunter",
+                type: "trend",
+                typeLabel: "中长线大趋势追踪",
+                gain: 312.8,
+                drawdown: 18.5,
+                balance: 45000,
+                days: 410,
+                subscribers: 2450,
+                risk: "med",
+                riskLabel: "平衡增长型",
+                price: 89,
+                pf: 1.84,
+                sharpe: 2.14,
+                winRate: 64.2,
+                trades: 620,
+                history: [0, 18, 42, 35, 68, 92, 120, 110, 150, 192, 240, 285, 312.8],
+                monthly: [
+                    { year: 2025, jan: 15.2, feb: 18.4, mar: -5.2, apr: 22.1, may: -10.5, jun: 14.8, jul: 25.1, aug: 30.2, sep: -8.4, oct: 18.2, nov: 15.4, dec: 22.8, total: 158.1 },
+                    { year: 2026, jan: 12.5, feb: 16.4, mar: 20.1, apr: -4.5, may: 28.2, jun: "", jul: "", aug: "", sep: "", oct: "", nov: "", dec: "", total: 154.7 }
+                ]
+            },
+            {
+                id: 3,
+                name: "GoldRush Grid Core",
+                type: "grid",
+                typeLabel: "黄金 XAUUSD 震荡对冲网格",
+                gain: 582.4,
+                drawdown: 32.8,
+                balance: 89000,
+                days: 195,
+                subscribers: 1840,
+                risk: "high",
+                riskLabel: "激进高收益",
+                price: 120,
+                pf: 1.52,
+                sharpe: 1.78,
+                winRate: 88.4,
+                trades: 3450,
+                history: [0, 45, 92, 120, 180, 240, 310, 250, 390, 450, 410, 520, 582.4],
+                monthly: [
+                    { year: 2025, jan: 25.2, feb: 32.1, mar: 28.4, apr: -15.4, may: 35.1, jun: 42.1, jul: -22.5, aug: 48.2, sep: 30.5, oct: 38.2, nov: -18.2, dec: 45.1, total: 268.8 },
+                    { year: 2026, jan: 32.1, feb: 45.2, mar: -28.4, apr: 52.1, may: 48.2, jun: "", jul: "", aug: "", sep: "", oct: "", nov: "", dec: "", total: 313.6 }
+                ]
+            },
+            {
+                id: 4,
+                name: "Alpha Arbitrage Dynamic",
+                type: "multicurrency",
+                typeLabel: "跨品种高频统计套利",
+                gain: 85.4,
+                drawdown: 6.2,
+                balance: 105000,
+                days: 520,
+                subscribers: 980,
+                risk: "low",
+                riskLabel: "保守低回撤",
+                price: 60,
+                pf: 2.35,
+                sharpe: 3.12,
+                winRate: 78.9,
+                trades: 4120,
+                history: [0, 8, 15, 22, 30, 38, 42, 49, 56, 64, 72, 78, 85.4],
+                monthly: [
+                    { year: 2025, jan: 5.2, feb: 6.1, mar: 4.8, apr: 5.9, may: 6.2, jun: -1.2, jul: 5.8, aug: 6.4, sep: 5.1, oct: 6.9, nov: 5.8, dec: 6.1, total: 53.1 },
+                    { year: 2026, jan: 4.8, feb: 5.9, mar: 6.2, apr: 6.8, may: 7.2, jun: "", jul: "", aug: "", sep: "", oct: "", nov: "", dec: "", total: 32.3 }
+                ]
+            },
+            {
+                id: 5,
+                name: "Quantum HFT Scalper",
+                type: "scalping",
+                typeLabel: "微秒级自适应闪电剥头皮",
+                gain: 215.4,
+                drawdown: 12.5,
+                balance: 32000,
+                days: 120,
+                subscribers: 1120,
+                risk: "low",
+                riskLabel: "保守低回撤",
+                price: 79,
+                pf: 1.98,
+                sharpe: 2.54,
+                winRate: 75.8,
+                trades: 2150,
+                history: [0, 25, 48, 62, 85, 110, 132, 122, 154, 178, 192, 205, 215.4],
+                monthly: [
+                    { year: 2025, jan: 18.2, feb: 20.1, mar: 15.4, apr: -8.2, may: 22.4, jun: 19.5, jul: 17.8, aug: -5.2, sep: 24.2, oct: 21.5, nov: 18.9, dec: 22.1, total: 136.8 },
+                    { year: 2026, jan: 19.5, feb: 22.4, mar: 24.1, apr: 12.5, may: "", jun: "", jul: "", aug: "", sep: "", oct: "", nov: "", dec: "", total: 78.5 }
+                ]
+            },
+            {
+                id: 6,
+                name: "Titan Multi-Asset Hedging",
+                type: "multicurrency",
+                typeLabel: "全品种智能对冲避险系统",
+                gain: 172.5,
+                drawdown: 14.8,
+                balance: 75000,
+                days: 340,
+                subscribers: 1580,
+                risk: "med",
+                riskLabel: "平衡增长型",
+                price: 99,
+                pf: 1.76,
+                sharpe: 2.05,
+                winRate: 69.5,
+                trades: 1840,
+                history: [0, 15, 32, 48, 62, 80, 95, 88, 112, 130, 145, 160, 172.5],
+                monthly: [
+                    { year: 2025, jan: 12.1, feb: 14.2, mar: 15.8, apr: -4.5, may: 16.2, jun: 18.2, jul: 15.1, aug: -8.2, sep: 19.4, oct: 17.2, nov: 14.5, dec: 16.8, total: 116.8 },
+                    { year: 2026, jan: 14.2, feb: 16.5, mar: 18.2, apr: 11.2, may: "", jun: "", jul: "", aug: "", sep: "", oct: "", nov: "", dec: "", total: 55.7 }
+                ]
+            }
+        ];
+
+        let currentActiveSignal = mockSignals[0]; // 当前点击查看详情的信号
+        let activeChart = null; // Chart.js 缓存引用
+        let activeFullSimChart = null; // 平台大模拟器 Chart.js 引用
+
+        // 页面首次载入初始化
+        window.onload = function() {
+            renderSignalsList(mockSignals);
+            initFullPlatformSimulator();
+            setupAutoStatsTicker();
+        };
+
+        function renderSignalsList(data) {
+            const tbody = document.getElementById("signals-tbody");
+            const noData = document.getElementById("no-data-msg");
+            tbody.innerHTML = "";
+
+            if (data.length === 0) {
+                noData.classList.remove("hidden");
+                return;
+            } else {
+                noData.classList.add("hidden");
+            }
+
+            data.forEach((sig, index) => {
+                const tr = document.createElement("tr");
+                tr.className = "hover:bg-slate-800/40 transition-colors cursor-pointer";
+                tr.setAttribute("onclick", `showDetail(${sig.id})`);
+
+                // 风险标星
+                let riskBadge = "";
+                if (sig.risk === "low") {
+                    riskBadge = `<span class="px-2.5 py-1 rounded bg-emerald-500/10 text-emerald-400 text-xs font-semibold">低回撤</span>`;
+                } else if (sig.risk === "med") {
+                    riskBadge = `<span class="px-2.5 py-1 rounded bg-amber-500/10 text-amber-400 text-xs font-semibold">平衡型</span>`;
+                } else {
+                    riskBadge = `<span class="px-2.5 py-1 rounded bg-red-500/10 text-red-400 text-xs font-semibold">积极型</span>`;
+                }
+
+                tr.innerHTML = `
+                    <td class="py-5 px-6 text-center text-slate-500 font-bold font-mono">${index + 1}</td>
+                    <td class="py-5 px-6">
+                        <div class="flex flex-col">
+                            <span class="font-bold text-white text-base hover:text-blue-400 transition-colors">${sig.name}</span>
+                            <span class="text-xs text-slate-500 font-light mt-0.5">${sig.typeLabel}</span>
+                        </div>
+                    </td>
+                    <td class="py-5 px-6 text-emerald-400 font-bold font-mono text-base">+${sig.gain}%</td>
+                    <td class="py-5 px-6 text-red-400 font-bold font-mono text-base">${sig.drawdown}%</td>
+                    <td class="py-5 px-6 text-slate-300 font-bold font-mono">$${sig.balance.toLocaleString()}</td>
+                    <td class="py-5 px-6 text-slate-400 font-mono">${sig.days} 天</td>
+                    <td class="py-5 px-6 text-blue-400 font-bold font-mono">${sig.subscribers} 人</td>
+                    <td class="py-5 px-6">${riskBadge}</td>
+                    <td class="py-5 px-6 text-amber-400 font-bold font-mono">$${sig.price}<span class="text-slate-500 text-[10px] font-normal"> /月</span></td>
+                    <td class="py-5 px-6 text-center" onclick="event.stopPropagation()">
+                        <button onclick="openWizard('follower', ${sig.id})" class="bg-blue-600 hover:bg-blue-500 text-white font-bold px-4 py-2 rounded-lg text-xs transition-all shadow-md shadow-blue-900/40">
+                            跟单
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function filterSignals() {
+            const query = document.getElementById("search-input").value.toLowerCase();
+            const riskValue = document.getElementById("risk-filter").value;
+            const typeValue = document.getElementById("type-filter").value;
+            const daysValue = document.getElementById("days-filter").value;
+            const sortValue = document.getElementById("sort-select").value;
+
+            let filtered = mockSignals.filter(sig => {
+                const matchesSearch = sig.name.toLowerCase().includes(query) || sig.typeLabel.toLowerCase().includes(query);
+                const matchesRisk = (riskValue === "all") || (sig.risk === riskValue);
+                const matchesType = (typeValue === "all") || (sig.type === typeValue);
+                
+                let matchesDays = true;
+                if (daysValue !== "all") {
+                    matchesDays = sig.days >= parseInt(daysValue);
+                }
+
+                return matchesSearch && matchesRisk && matchesType && matchesDays;
+            });
+
+            // 排序控制
+            if (sortValue === "gain-desc") {
+                filtered.sort((a, b) => b.gain - a.gain);
+            } else if (sortValue === "drawdown-asc") {
+                filtered.sort((a, b) => a.drawdown - b.drawdown);
+            } else if (sortValue === "subs-desc") {
+                filtered.sort((a, b) => b.subscribers - a.subscribers);
+            } else if (sortValue === "price-asc") {
+                filtered.sort((a, b) => a.price - b.price);
+            } else {
+                // 默认排名：综合得分：(总收益 / 最大回撤) * 跟单人气
+                filtered.sort((a, b) => ((b.gain / b.drawdown) * b.subscribers) - ((a.gain / a.drawdown) * a.subscribers));
+            }
+
+            renderSignalsList(filtered);
+        }
+
+        function showDetail(id) {
+            const sig = mockSignals.find(s => s.id === id);
+            if (!sig) return;
+            currentActiveSignal = sig;
+
+            document.getElementById("modal-strategy-name").innerText = sig.name;
+            document.getElementById("modal-strategy-platform").innerText = `MT4 / MT5 / EST Active: ${sig.days} Days`;
+            document.getElementById("stat-pf").innerText = sig.pf;
+            document.getElementById("stat-sharpe").innerText = sig.sharpe;
+            document.getElementById("stat-winrate").innerText = sig.winRate + "%";
+            document.getElementById("stat-trades").innerText = sig.trades + " 笔";
+
+            // 初始化或更新详细图表
+            renderDetailChart(sig);
+
+            // 初始化弹窗计算器初始值
+            document.getElementById("sim-balance").value = 10000;
+            document.getElementById("sim-multiplier").value = 1.0;
+            document.getElementById("sim-multiplier-val").innerText = "1.0x";
+            runSimulation();
+
+            // 渲染月度收益率二维表格
+            renderMonthlyMatrix(sig);
+
+            // 显示弹窗
+            document.getElementById("detail-modal").classList.remove("hidden");
+        }
+
+        function closeModal() {
+            document.getElementById("detail-modal").classList.add("hidden");
+        }
+
+        function renderMonthlyMatrix(sig) {
+            const tbody = document.getElementById("modal-monthly-tbody");
+            tbody.innerHTML = "";
+
+            sig.monthly.forEach(row => {
+                const tr = document.createElement("tr");
+                tr.className = "hover:bg-slate-800/50 transition-colors";
+                
+                const formatVal = (val) => {
+                    if (val === "") return `<span class="text-slate-700">-</span>`;
+                    if (val < 0) return `<span class="text-red-400 font-bold">${val}%</span>`;
+                    return `<span class="text-emerald-400 font-bold">+${val}%</span>`;
+                };
+
+                tr.innerHTML = `
+                    <td class="py-3 px-1 text-white font-bold">${row.year}</td>
+                    <td class="py-3 px-1">${formatVal(row.jan)}</td>
+                    <td class="py-3 px-1">${formatVal(row.feb)}</td>
+                    <td class="py-3 px-1">${formatVal(row.mar)}</td>
+                    <td class="py-3 px-1">${formatVal(row.apr)}</td>
+                    <td class="py-3 px-1">${formatVal(row.may)}</td>
+                    <td class="py-3 px-1">${formatVal(row.jun)}</td>
+                    <td class="py-3 px-1">${formatVal(row.jul)}</td>
+                    <td class="py-3 px-1">${formatVal(row.aug)}</td>
+                    <td class="py-3 px-1">${formatVal(row.sep)}</td>
+                    <td class="py-3 px-1">${formatVal(row.oct)}</td>
+                    <td class="py-3 px-1">${formatVal(row.nov)}</td>
+                    <td class="py-3 px-1">${formatVal(row.dec)}</td>
+                    <td class="py-3 px-1 bg-emerald-500/5 text-emerald-400 font-black">${formatVal(row.total)}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function renderDetailChart(sig) {
+            const ctx = document.getElementById("modal-equity-chart").getContext("2d");
+            
+            if (activeChart) {
+                activeChart.destroy();
+            }
+
+            // 模拟横坐标为运行周数
+            const labels = Array.from({length: sig.history.length}, (_, i) => `W-${i}`);
+
+            activeChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: '净值增长率 (%)',
+                        data: sig.history,
+                        borderColor: '#10B981',
+                        borderWidth: 2.5,
+                        backgroundColor: 'rgba(16, 185, 129, 0.05)',
+                        fill: true,
+                        tension: 0.3,
+                        pointRadius: 2,
+                        pointHoverRadius: 5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return ` 累计收益率: +${context.parsed.y}%`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: { color: 'rgba(255,255,255,0.03)' },
+                            ticks: { color: '#64748B' }
+                        },
+                        y: {
+                            grid: { color: 'rgba(255,255,255,0.03)' },
+                            ticks: { 
+                                color: '#64748B',
+                                callback: function(value) { return value + "%"; }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function runSimulation() {
+            const bal = parseFloat(document.getElementById("sim-balance").value) || 0;
+            const mult = parseFloat(document.getElementById("sim-multiplier").value);
+            
+            document.getElementById("sim-multiplier-val").innerText = mult.toFixed(1) + "x";
+
+            // 估计预计月化回报 (基于平均月化收益率，乘以本金和倍数)
+            const baseMonthlyReturn = (currentActiveSignal.gain / (currentActiveSignal.days / 30)) / 100;
+            const projectedProfit = bal * baseMonthlyReturn * mult;
+
+            // 估计历史最大潜在风险 (基于最大回撤额)
+            const projectedDD = bal * (currentActiveSignal.drawdown / 100) * mult;
+
+            // 渲染显示
+            document.getElementById("sim-profit").innerText = `+$${projectedProfit.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+            document.getElementById("sim-drawdown").innerText = `-$${projectedDD.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+
+            // 给出风险预警
+            const riskWarning = document.getElementById("sim-risk-warning");
+            const totalRiskRatio = (projectedDD / bal) * 100;
+
+            if (totalRiskRatio < 15) {
+                riskWarning.className = "text-[10px] p-2 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 rounded-lg text-center mt-2";
+                riskWarning.innerHTML = `<i class="fa-solid fa-shield"></i> 安全系数高。预期回撤不超过您本金的 15%。`;
+            } else if (totalRiskRatio >= 15 && totalRiskRatio <= 30) {
+                riskWarning.className = "text-[10px] p-2 bg-amber-500/10 border border-amber-500/30 text-amber-400 rounded-lg text-center mt-2";
+                riskWarning.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> 风险偏适中。预期最大回撤可能达到本金的 ${totalRiskRatio.toFixed(1)}%。`;
+            } else {
+                riskWarning.className = "text-[10px] p-2 bg-red-500/10 border border-red-500/30 text-red-400 rounded-lg text-center mt-2";
+                riskWarning.innerHTML = `<i class="fa-solid fa-circle-exclamation animate-bounce"></i> 极端高风险！预计本金回撤可能超过 ${totalRiskRatio.toFixed(1)}%，建议降低跟单倍数。`;
+            }
+        }
+
+        function initFullPlatformSimulator() {
+            const select = document.getElementById("full-sim-strategy");
+            select.innerHTML = "";
+            
+            mockSignals.forEach(sig => {
+                const opt = document.createElement("option");
+                opt.value = sig.id;
+                opt.text = `${sig.name} ( Gain: +${sig.gain}% / DD: ${sig.drawdown}% )`;
+                select.appendChild(opt);
+            });
+
+            runFullPlatformSimulation();
+        }
+
+        // 大模拟器参数组合计算
+        function runFullPlatformSimulation() {
+            const bal = parseFloat(document.getElementById("full-sim-balance").value) || 0;
+            const sigId = parseInt(document.getElementById("full-sim-strategy").value);
+            const ratio = parseFloat(document.getElementById("full-sim-ratio").value);
+
+            document.getElementById("full-sim-ratio-val").innerText = ratio.toFixed(1) + "x";
+
+            const sig = mockSignals.find(s => s.id === sigId);
+            if (!sig) return;
+
+            // 计算预计年总收益额
+            const annualReturnPercent = (sig.gain / (sig.days / 365)) / 100;
+            const totalProfit = bal * annualReturnPercent * ratio;
+
+            // 计算预计最大回撤额
+            const maxDD = bal * (sig.drawdown / 100) * ratio;
+
+            // 呈现
+            document.getElementById("full-sim-out-profit").innerText = `+$${totalProfit.toLocaleString(undefined, {maximumFractionDigits: 0})}`;
+            document.getElementById("full-sim-out-dd").innerText = `-$${maxDD.toLocaleString(undefined, {maximumFractionDigits: 0})}`;
+
+            // 回报风险综合评级计算
+            const rate = document.getElementById("full-sim-out-rate");
+            const ddRatio = (maxDD / bal) * 100;
+            if (ddRatio < 10) {
+                rate.innerText = "EXCELLENT";
+                rate.className = "text-xl font-bold text-emerald-400 mt-1 block font-mono";
+            } else if (ddRatio >= 10 && ddRatio <= 25) {
+                rate.innerText = "STABLE";
+                rate.className = "text-xl font-bold text-blue-400 mt-1 block font-mono";
+            } else if (ddRatio > 25 && ddRatio <= 40) {
+                rate.innerText = "MODERATE";
+                rate.className = "text-xl font-bold text-amber-400 mt-1 block font-mono";
+            } else {
+                rate.innerText = "HIGH RISK";
+                rate.className = "text-xl font-bold text-red-400 mt-1 block font-mono";
+            }
+
+            // 绘制大模拟曲线图 (ChartJS)
+            renderPlatformSimulationChart(sig, bal, ratio);
+        }
+
+        // 大模拟器一键加载风控预设配置
+        function applyPreset(balance, sigIndex, ratio) {
+            document.getElementById("full-sim-balance").value = balance;
+            document.getElementById("full-sim-strategy").selectedIndex = sigIndex;
+            document.getElementById("full-sim-ratio").value = ratio;
+            
+            showToast("✅ 已成功加载跟单风险偏好预设配置！");
+            runFullPlatformSimulation();
+        }
+
+        // 渲染大模拟曲线图
+        function renderPlatformSimulationChart(sig, bal, ratio) {
+            const ctx = document.getElementById("platform-simulation-chart").getContext("2d");
+            if (activeFullSimChart) {
+                activeFullSimChart.destroy();
+            }
+
+            // 计算基于当前余额的复合增长路径数据
+            const dataPoints = sig.history.map(pct => {
+                return bal * (1 + (pct / 100) * ratio);
+            });
+
+            const labels = Array.from({length: dataPoints.length}, (_, i) => `Month-${Math.floor(i / 1.5)}`);
+
+            activeFullSimChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: '预期本金增长值 ($)',
+                        data: dataPoints,
+                        borderColor: '#3B82F6',
+                        borderWidth: 2,
+                        backgroundColor: 'rgba(59, 130, 246, 0.05)',
+                        fill: true,
+                        tension: 0.3,
+                        pointRadius: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { grid: { display: false }, ticks: { color: '#64748B' } },
+                        y: {
+                            grid: { color: 'rgba(255,255,255,0.03)' },
+                            ticks: { 
+                                color: '#64748B',
+                                callback: function(value) { return "$" + value.toLocaleString(); }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function setupAutoStatsTicker() {
+            setInterval(() => {
+                // 模拟跟单总数和交易量的微幅变动
+                const deltaSubs = Math.floor(Math.random() * 3) - 1;
+                const subsElem = document.getElementById("stat-copiers");
+                const currentSubs = parseInt(subsElem.innerText.replace(",", ""));
+                subsElem.innerText = (currentSubs + deltaSubs).toLocaleString() + "+";
+
+                // 延迟微变
+                const latencyElem = document.getElementById("stat-latency");
+                const currentLat = (Math.random() * 5 + 10).toFixed(1);
+                latencyElem.innerText = "< " + currentLat + "ms";
+            }, 6000);
+        }
+
+        let currentStep = 1;
+        let wizardMode = "follower"; // follower 或 provider
+
+        function openWizard(mode, strategyId = null) {
+            wizardMode = mode;
+            currentStep = 1;
+
+            if (mode === "provider") {
+                document.getElementById("wizard-title").innerText = "申请发布新信号服务 (Provider Wizard)";
+            } else {
+                document.getElementById("wizard-title").innerText = "绑定我的 MT4/MT5 托管跟单账户";
+            }
+
+            // 如果是从详细页点击过来的，可以在这里联动
+            if (strategyId) {
+                closeModal();
+            }
+
+            updateWizardUI();
+            document.getElementById("wizard-modal").classList.remove("hidden");
+        }
+
+        function closeWizard() {
+            document.getElementById("wizard-modal").classList.add("hidden");
+        }
+
+        function updateWizardUI() {
+            // 隐藏/显示内容
+            document.getElementById("step-content-1").classList.add("hidden");
+            document.getElementById("step-content-2").classList.add("hidden");
+            document.getElementById("step-content-3").classList.add("hidden");
+            document.getElementById(`step-content-${currentStep}`).classList.remove("hidden");
+
+            // 更新圆圈指示器
+            for (let i = 1; i <= 3; i++) {
+                const dot = document.getElementById(`step-dot-${i}`);
+                if (i < currentStep) {
+                    dot.className = "w-7 h-7 bg-emerald-500 rounded-full flex items-center justify-center text-xs font-bold text-white transition-colors";
+                    dot.innerHTML = `<i class="fa-solid fa-check"></i>`;
+                } else if (i === currentStep) {
+                    dot.className = "w-7 h-7 bg-blue-600 rounded-full flex items-center justify-center text-xs font-bold text-white transition-colors";
+                    dot.innerHTML = i;
+                } else {
+                    dot.className = "w-7 h-7 bg-slate-800 rounded-full flex items-center justify-center text-xs font-bold text-slate-400 transition-colors";
+                    dot.innerHTML = i;
+                }
+
+                // 连接线更新
+                if (i < 3) {
+                    const line = document.getElementById(`step-line-${i}`);
+                    if (i < currentStep) {
+                        line.className = "flex-grow h-0.5 bg-emerald-500 mx-2";
+                    } else {
+                        line.className = "flex-grow h-0.5 bg-slate-800 mx-2";
+                    }
+                }
+            }
+
+            // 更新控制按钮
+            const prevBtn = document.getElementById("wizard-prev-btn");
+            const nextBtn = document.getElementById("wizard-next-btn");
+
+            if (currentStep === 1) {
+                prevBtn.classList.add("invisible");
+            } else {
+                prevBtn.classList.remove("invisible");
+            }
+
+            if (currentStep === 3) {
+                nextBtn.innerHTML = wizardMode === 'provider' ? '立即开启信号发布' : '立即部署云端复制';
+                nextBtn.className = "bg-emerald-500 hover:bg-emerald-400 text-black px-6 py-2.5 rounded-xl text-xs font-black transition-all shadow-md";
+            } else {
+                nextBtn.innerHTML = `下一步 <i class="fa-solid fa-chevron-right ml-1"></i>`;
+                nextBtn.className = "bg-blue-600 hover:bg-blue-500 text-white px-6 py-2.5 rounded-xl text-xs font-bold transition-all shadow-md";
+            }
+        }
+
+        function nextStep() {
+            if (currentStep === 1) {
+                const broker = document.getElementById("broker-search").value.trim();
+                if (!broker) {
+                    showToast("⚠️ 请先输入您的经纪商服务器服务器！");
+                    return;
+                }
+                currentStep = 2;
+                updateWizardUI();
+            } else if (currentStep === 2) {
+                const accId = document.getElementById("wizard-account-id").value;
+                const pass = document.getElementById("wizard-password").value;
+                if (!accId || !pass) {
+                    showToast("⚠️ 请确保账户ID和密码已输入完整！");
+                    return;
+                }
+                // 模拟一个联网连接进度条
+                showToast("⚡ 正在与经纪商服务器通信鉴权...");
+                setTimeout(() => {
+                    currentStep = 3;
+                    updateWizardUI();
+                }, 1200);
+            } else if (currentStep === 3) {
+                // 完成注册
+                showToast("✨ 正在部署云托管跟单环境...");
+                setTimeout(() => {
+                    closeWizard();
+                    triggerCelebration();
+                }, 1500);
+            }
+        }
+
+        function prevStep() {
+            if (currentStep > 1) {
+                currentStep--;
+                updateWizardUI();
+            }
+        }
+
+        // 详情页直接点跟单按钮
+        function startSetupFromModal() {
+            openWizard('follower', currentActiveSignal.id);
+        }
+
+        // 显示密码可视性切换
+        function togglePasswordVisibility(id) {
+            const input = document.getElementById(id);
+            const eye = document.getElementById("toggle-eye");
+            if (input.type === "password") {
+                input.type = "text";
+                eye.className = "fa-solid fa-eye-slash";
+            } else {
+                input.type = "password";
+                eye.className = "fa-solid fa-eye";
+            }
+        }
+
+        function triggerCelebration() {
+            // 1. 撒花
+            confetti({
+                particleCount: 150,
+                spread: 80,
+                origin: { y: 0.6 }
+            });
+
+            // 2. 弹窗提示成功
+            setTimeout(() => {
+                showToast("🎉 托管成功！云端同步引擎已启动。我们已为您对接到最优质的交易通道。");
+            }, 300);
+        }
+
+        // 统一Toast弹窗提示机制
+        function showToast(msg) {
+            const container = document.getElementById("toast-container");
+            const toast = document.createElement("div");
+            toast.className = "bg-slate-900 border border-slate-700 text-xs text-slate-200 px-4 py-3 rounded-xl shadow-2xl flex items-center justify-between gap-3 animate-fade-in-up w-80";
+            toast.innerHTML = `
+                <span>${msg}</span>
+                <button onclick="this.parentElement.remove()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+            `;
+            container.appendChild(toast);
+            
+            // 4秒后自动移除
+            setTimeout(() => {
+                toast.classList.add("opacity-0", "transition-opacity", "duration-500");
+                setTimeout(() => toast.remove(), 500);
+            }, 4000);
+        }
+    </script>
+</body>
+</html>
