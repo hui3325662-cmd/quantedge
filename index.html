@@ -2693,15 +2693,171 @@ const supabase = supabaseUrl && supabaseKey ? window.supabase.createClient(supab
                 t3.className = this.currentWizardStep === 3 ? "text-[10px] text-[#c5a059] font-bold" : "text-[10px] text-zinc-400 font-bold";
             },
 
-            finishWizard() {
-                const server = document.getElementById('account_server').value.trim();
-                const accId = document.getElementById('account_id').value.trim();
-                const mult = document.getElementById('multiplier_select').value;
-                const ddLimit = document.getElementById('risk_dd_limit').value;
+           async finishWizard() {
+        // 你的测试用户 ID (1711d23e-d9cd-4997-a0ef-4075e8aeff9f)
+        const testUserId = '1711d23e-d9cd-4997-a0ef-4075e8aeff9f';
+
+        const server = document.getElementById('account_server').value.trim();
+        const accId = document.getElementById('account_id').value.trim();
+        const pass = document.getElementById('account_pass').value.trim();
+        const mult = document.getElementById('multiplier_select').value;
+        const ddLimit = document.getElementById('risk_dd_limit').value;
+
+        const newRule = {
+            id: `API-${accId}`,
+            broker: server,
+            platform: app.activePlatform,
+            multiplier: `${mult} 倍`,
+            drawdown: `${ddLimit}%`,
+            status: "Active"
+        };
+
+        // --- 【新增：真实向 Supabase 云数据库写入账户信息】 ---
+        if (supabase) {
+            app.showCustomNotification("正在向 Wintop 安全云网桥同步凭证...");
+            
+            const { data, error } = await supabase
+                .from('trader_accounts')
+                .insert([
+                    {
+                        user_id: testUserId,
+                        platform: app.activePlatform,
+                        broker_server: server,
+                        account_number: accId,
+                        investor_password: pass, 
+                        multiplier: parseFloat(mult),
+                        max_drawdown: parseFloat(ddLimit),
+                        status: 'active'
+                    }
+                ]);
+
+            if (error) {
+                console.error("数据库同步失败:", error.message);
+                app.showCustomNotification("云网桥凭证同步失败: " + error.message, true);
+                return; // 写入失败阻断
+            }
+        }
+        // ----------------------------------------------------
+
+        app.activeRules.unshift(newRule);
+        app.saveToStorage();
+        app.renderActiveRules();
+
+        confetti({
+            particleCount: 150,
+            spread: 80,
+            origin: { y: 0.6 }
+        });
+
+        app.showCustomNotification("恭喜您！您的 API 实盘账户已顺利绑定至 Wintop 2.0 云端服务器。");
+        app。switchTab('copy-rules');
+
+        // 重置向导
+        document.getElementById('account_server').value = '';
+        document.getElementById('account_id').value = '';
+        document.getElementById('account_pass').value = '';
+        app.nextWizardStep(1);
+    }, // <-- 【注意】：这个逗号代表 finishWizard 方法结束，准备写下一个方法
+
+    async submitTicket(e) {
+        e.preventDefault();
+        const testUserId = '1711d23e-d9cd-4997-a0ef-4075e8aeff9f';
+
+        const cat = document.getElementById('ticket_category').value;
+        const title = document.getElementById('ticket_title').value.trim();
+        const desc = document.getElementById('ticket_desc').value.trim();
+
+        const newTicket = {
+            id: "T-" + Math.floor(1000 + Math.random() * 9000),
+            category: cat,
+            title: title,
+            desc: desc,
+            status: "processing",
+            time: "刚刚"
+        };
+
+        // --- 【安全云网桥直写：真实向 Supabase 云数据库写入工单数据】 ---
+        if (supabase) {
+            const { data, error } = await supabase
+                .from('support_tickets')
+                。insert([
+                    {
+                        user_id: testUserId,
+                        category: cat,
+                        title: title,
+                        description: desc,
+                        status: 'processing'
+                    }
+                ]);
+
+            if (error) {
+                console.error("工单同步数据库失败:", error.message);
+                app.showCustomNotification("工单发送失败: " + error.message, true);
+                return; // 写入失败阻断
+            }
+        }
+        // ----------------------------------------------------
+
+        app.tickets.unshift(newTicket);
+        app.renderTickets();
+
+        // 重置输入
+        document.getElementById('ticket_title').value = '';
+        document.getElementById('ticket_desc').value = '';
+
+        app。showCustomNotification("工单提交成功！跟单支持库会在数分钟内派发工程师对接处理。");
+    }
+
+        // --- 【新增：真实向 Supabase 云数据库写入账户信息】 ---
+        if (supabase) {
+            app.showCustomNotification("正在向 Wintop 安全云网桥同步凭证...");
+            
+            const { data, error } = await supabase
+                .from('trader_accounts')
+                .insert([
+                    {
+                        user_id: testUserId,
+                        platform: app.activePlatform,
+                        broker_server: server,
+                        account_number: accId,
+                        investor_password: pass, // 商业部署时建议在前端用库加密后传输
+                        multiplier: parseFloat(mult),
+                        max_drawdown: parseFloat(ddLimit),
+                        status: 'active'
+                    }
+                ]);
+
+            if (error) {
+                console.error("数据库同步失败:", error.message);
+                app.showCustomNotification("云网桥凭证同步失败: " + error.message, true);
+                return; // 写入失败阻断
+            }
+        }
+        // ----------------------------------------------------
+
+        app.activeRules.unshift(newRule);
+        app.saveToStorage();
+        app.renderActiveRules();
+
+        confetti({
+            particleCount: 150,
+            spread: 80,
+            origin: { y: 0.6 }
+        });
+
+        app.showCustomNotification("恭喜您！您的 API 实盘账户已顺利绑定至 Wintop 2.0 云端服务器。");
+        app.switchTab('copy-rules');
+
+        // 重置向导
+        document。getElementById('account_server').value = '';
+        document.getElementById('account_id').value = '';
+        document.getElementById('account_pass').value = '';
+        app.nextWizardStep(1);
+    }
 
                 const newRule = {
                     id: `API-${accId}`,
-                    broker: server,
+                    broker: server，
                     platform: this.activePlatform,
                     multiplier: `${mult} 倍`,
                     drawdown: `${ddLimit}%`,
@@ -2719,7 +2875,7 @@ const supabase = supabaseUrl && supabaseKey ? window.supabase.createClient(supab
                 });
 
                 this.showCustomNotification("恭喜您！您的 API 实盘账户已顺利绑定至 Wintop 2.0 云端服务器中。");
-                this.switchTab('copy-rules');
+                this。switchTab('copy-rules');
 
                 // 重置向导
                 document.getElementById('account_server').value = '';
@@ -2814,7 +2970,7 @@ const supabase = supabaseUrl && supabaseKey ? window.supabase.createClient(supab
 
             // 模拟提交链上转账对账
             simulateUSDTConfirm() {
-                this.showCustomNotification("已提交您的 TRC-20 链上转账流水！由于链上区块确认延迟，财务正在加速核准...");
+                this。showCustomNotification("已提交您的 TRC-20 链上转账流水！由于链上区块确认延迟，财务正在加速核准...");
                 setTimeout(() => {
                     confetti({
                         particleCount: 120,
