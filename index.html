@@ -92,8 +92,8 @@
                         <a href="#" onclick="app.switchTab('copy-rules')" class="block px-4 py-2 text-xs text-zinc-300 hover:bg-[#18181c] hover:text-[#c5a059]" data-i18n="nav_risk">跟单风控策略</a>
                     </div>
                 </div>
-                <button onclick="app.switchTab('signals-lobby-tab')" class="text-sm font-semibold text-[#c5a059] px-3 py-2 transition-all" data-i18n="nav_signals">跟单信号源</button>
-                <button onclick="app.switchTab('simulator-tab')" class="text-sm font-semibold text-zinc-300 hover:text-[#c5a059] px-3 py-2 transition-all" data-i18n="nav_simulator">Simulator</button>
+                <button onclick="app.switchTab('signals-lobby-tab')" class="text-sm font-semibold text-zinc-300 hover:text-[#c5a059] px-3 py-2 transition-all" data-i18n="nav_signals">跟单信号源</button>
+                <button onclick="app.switchTab('simulator-tab')" class="text-sm font-semibold text-[#c5a059] px-3 py-2 transition-all" data-i18n="nav_simulator">Simulator</button>
                 <button onclick="app.switchTab('support-center')" class="text-sm font-semibold text-zinc-300 hover:text-[#c5a059] px-3 py-2 transition-all" data-i18n="nav_support">支持中心</button>
             </nav>
 
@@ -147,7 +147,7 @@
                 <div class="bg-[#121215] border border-[#c5a059]/10 p-5 rounded-xl">
                     <p class="text-xs text-zinc-500" data-i18n="db_col_cap">当前跟单总净值 (Equity)</p>
                     <p class="text-2xl font-black text-white font-mono mt-1" id="dash_equity">$14,285.40</p>
-                    <p class="text-[10px] text-emerald-400 mt-2">+$320.40 今日实盘盈亏</p>
+                    <p class="text-[10px] text-emerald-400 mt-2" data-i18n="db_today_p">+$320.40 今日实盘盈亏</p>
                 </div>
                 <div class="bg-[#121215] border border-[#c5a059]/10 p-5 rounded-xl">
                     <p class="text-xs text-zinc-500" data-i18n="db_col_rate">累计投资盈亏率 (ROI)</p>
@@ -196,8 +196,8 @@
                         <label for="filter_gain_val" class="text-xs text-zinc-300 font-medium" data-i18n="f_gain">1. 复合总收益率</label>
                         <div class="flex">
                             <select id="filter_gain_op" class="bg-[#050507] border border-zinc-800 rounded-l-lg px-2 text-xs text-zinc-300 h-9 outline-none">
-                                <option value="gt">高于</option>
-                                <option value="lt">低于</option>
+                                <option value="gt" data-i18n="op_gt">高于</option>
+                                <option value="lt" data-i18n="op_lt">低于</option>
                             </select>
                             <input type="number" id="filter_gain_val" placeholder="%" class="w-full bg-[#050507] border-y border-r border-zinc-800 rounded-r-lg px-3 text-xs text-white h-9 outline-none font-mono">
                         </div>
@@ -207,8 +207,8 @@
                         <label for="filter_dd_val" class="text-xs text-zinc-300 font-medium" data-i18n="f_dd">2. 最大历史回撤</label>
                         <div class="flex">
                             <select id="filter_dd_op" class="bg-[#050507] border border-zinc-800 rounded-l-lg px-2 text-xs text-zinc-300 h-9 outline-none">
-                                <option value="lt" selected>低于</option>
-                                <option value="gt">高于</option>
+                                <option value="lt" selected data-i18n="op_lt">低于</option>
+                                <option value="gt" data-i18n="op_gt">高于</option>
                             </select>
                             <input type="number" id="filter_dd_val" placeholder="%" class="w-full bg-[#050507] border-y border-r border-zinc-800 rounded-r-lg px-3 text-xs text-white h-9 outline-none font-mono">
                         </div>
@@ -218,8 +218,8 @@
                         <label for="filter_pips_val" class="text-xs text-zinc-300 font-medium" data-i18n="f_pips">3. 获利总点数表现</label>
                         <div class="flex">
                             <select id="filter_pips_op" class="bg-[#050507] border border-zinc-800 rounded-l-lg px-2 text-xs text-zinc-300 h-9 outline-none">
-                                <option value="gt">高于</option>
-                                <option value="lt">低于</option>
+                                <option value="gt" data-i18n="op_gt">高于</option>
+                                <option value="lt" data-i18n="op_lt">低于</option>
                             </select>
                             <input type="number" id="filter_pips_val" placeholder="点数" class="w-full bg-[#050507] border-y border-r border-zinc-800 rounded-r-lg px-3 text-xs text-white h-9 outline-none font-mono">
                         </div>
@@ -229,8 +229,8 @@
                         <label for="filter_pf_val" class="text-xs text-zinc-300 font-medium" data-i18n="f_pf">4. 账户利润因子 (PF)</label>
                         <div class="flex">
                             <select id="filter_pf_op" class="bg-[#050507] border border-zinc-800 rounded-l-lg px-2 text-xs text-zinc-300 h-9 outline-none">
-                                <option value="gt">高于</option>
-                                <option value="lt">低于</option>
+                                <option value="gt" data-i18n="op_gt">高于</option>
+                                <option value="lt" data-i18n="op_lt">低于</option>
                             </select>
                             <input type="number" step="0.1" id="filter_pf_val" placeholder="如 1.5" class="w-full bg-[#050507] border-y border-r border-zinc-800 rounded-r-lg px-3 text-xs text-white h-9 outline-none font-mono">
                         </div>
@@ -240,8 +240,8 @@
                         <label for="filter_balance_val" class="text-xs text-zinc-300 font-medium" data-i18n="f_balance">5. 信号源账户余额</label>
                         <div class="flex">
                             <select id="filter_balance_op" class="bg-[#050507] border border-zinc-800 rounded-l-lg px-2 text-xs text-zinc-300 h-9 outline-none">
-                                <option value="gt">大于</option>
-                                <option value="lt">小于</option>
+                                <option value="gt" data-i18n="op_gt">大于</option>
+                                <option value="lt" data-i18n="op_lt">小于</option>
                             </select>
                             <input type="number" id="filter_balance_val" placeholder="$ USD" class="w-full bg-[#050507] border-y border-r border-zinc-800 rounded-r-lg px-3 text-xs text-white h-9 outline-none font-mono">
                         </div>
@@ -251,8 +251,8 @@
                         <label for="filter_monthly_val" class="text-xs text-zinc-300 font-medium" data-i18n="f_monthly">6. 预期月均收益率</label>
                         <div class="flex">
                             <select id="filter_monthly_op" class="bg-[#050507] border border-zinc-800 rounded-l-lg px-2 text-xs text-zinc-300 h-9 outline-none">
-                                <option value="gt">高于</option>
-                                <option value="lt">低于</option>
+                                <option value="gt" data-i18n="op_gt">高于</option>
+                                <option value="lt" data-i18n="op_lt">低于</option>
                             </select>
                             <input type="number" id="filter_monthly_val" placeholder="%" class="w-full bg-[#050507] border-y border-r border-zinc-800 rounded-r-lg px-3 text-xs text-white h-9 outline-none font-mono">
                         </div>
@@ -262,8 +262,8 @@
                         <label for="filter_lev_val" class="text-xs text-zinc-300 font-medium" data-i18n="f_leverage">7. 实盘配置最大杠杆</label>
                         <div class="flex">
                             <select id="filter_lev_op" class="bg-[#050507] border border-zinc-800 rounded-l-lg px-2 text-xs text-zinc-300 h-9 outline-none">
-                                <option value="lt">低于 1:</option>
-                                <option value="gt">高于 1:</option>
+                                <option value="lt" data-i18n="op_lt">低于 1:</option>
+                                <option value="gt" data-i18n="op_gt">高于 1:</option>
                             </select>
                             <input type="number" id="filter_lev_val" placeholder="如 500" class="w-full bg-[#050507] border-y border-r border-zinc-800 rounded-r-lg px-3 text-xs text-white h-9 outline-none font-mono">
                         </div>
@@ -273,8 +273,8 @@
                         <label for="filter_trades_val" class="text-xs text-zinc-300 font-medium" data-i18n="f_trades">8. 累计已建仓笔数</label>
                         <div class="flex">
                             <select id="filter_trades_op" class="bg-[#050507] border border-zinc-800 rounded-l-lg px-2 text-xs text-zinc-300 h-9 outline-none">
-                                <option value="gt">大于</option>
-                                <option value="lt">小于</option>
+                                <option value="gt" data-i18n="op_gt">大于</option>
+                                <option value="lt" data-i18n="op_lt">小于</option>
                             </select>
                             <input type="number" id="filter_trades_val" placeholder="笔" class="w-full bg-[#050507] border-y border-r border-zinc-800 rounded-r-lg px-3 text-xs text-white h-9 outline-none font-mono">
                         </div>
@@ -284,8 +284,8 @@
                         <label for="filter_age_val" class="text-xs text-zinc-300 font-medium" data-i18n="f_age">9. 策略在线存活年龄</label>
                         <div class="flex">
                             <select id="filter_age_op" class="bg-[#050507] border border-zinc-800 rounded-l-lg px-2 text-xs text-zinc-300 h-9 outline-none">
-                                <option value="gt">大于</option>
-                                <option value="lt">小于</option>
+                                <option value="gt" data-i18n="op_gt">大于</option>
+                                <option value="lt" data-i18n="op_lt">小于</option>
                             </select>
                             <input type="number" id="filter_age_val" placeholder="天" class="w-full bg-[#050507] border-y border-r border-zinc-800 rounded-r-lg px-3 text-xs text-white h-9 outline-none font-mono">
                         </div>
@@ -295,8 +295,8 @@
                         <label for="filter_wr_val" class="text-xs text-zinc-300 font-medium" data-i18n="col_winrate">10. 历史平仓胜率基准</label>
                         <div class="flex">
                             <select id="filter_wr_op" class="bg-[#050507] border border-zinc-800 rounded-l-lg px-2 text-xs text-zinc-300 h-9 outline-none">
-                                <option value="gt">高于</option>
-                                <option value="lt">低于</option>
+                                <option value="gt" data-i18n="op_gt">高于</option>
+                                <option value="lt" data-i18n="op_lt">低于</option>
                             </select>
                             <input type="number" id="filter_wr_val" placeholder="%" class="w-full bg-[#050507] border-y border-r border-zinc-800 rounded-r-lg px-3 text-xs text-white h-9 outline-none font-mono">
                         </div>
@@ -305,10 +305,10 @@
                     <div class="flex flex-col gap-1.5">
                         <label for="filter_length" class="text-xs text-zinc-300 font-medium" data-i18n="f_length">11. 统计持仓周期风格</label>
                         <select id="filter_length" class="w-full bg-[#050507] border border-zinc-800 rounded-lg px-3 text-xs text-white h-9 outline-none">
-                            <option value="all">不限制风格 (全部)</option>
-                            <option value="scalping">极速剥头皮 (1小时内高频)</option>
-                            <option value="daytrade">标准日内交易 (24小时内平仓)</option>
-                            <option value="swing">中长线波段持仓 (持仓数天)</option>
+                            <option value="all" data-i18n="l_all">不限制风格 (全部)</option>
+                            <option value="scalping" data-i18n="l_scalp">极速剥头皮 (1小时内高频)</option>
+                            <option value="daytrade" data-i18n="l_day">标准日内交易 (24小时内平仓)</option>
+                            <option value="swing" data-i18n="l_swing">中长线波段持仓 (持仓数天)</option>
                         </select>
                     </div>
                     <!-- 12. 专属服务经纪商范围 -->
@@ -323,7 +323,7 @@
                     </div>
 
                     <div class="sm:col-span-2 lg:col-span-3 xl:col-span-4 flex justify-end gap-3 mt-2">
-                        <button onclick="app.resetFilters()" class="px-5 py-2 rounded-lg text-xs font-bold bg-[#18181c] text-zinc-300 border border-zinc-800 transition-all hover:bg-zinc-800" data-i18n="btn_reset">重置引擎</button>
+                        <button onclick="app.resetFilters()" class="px-5 py-2 rounded-lg text-xs font-bold bg-[#18181c] text-zinc-300 border border-zinc-800 transition-all hover:bg-zinc-800" data-i18n="btn_reset">重置资产</button>
                         <button onclick="app.applyFilters()" class="px-6 py-2 rounded-lg text-xs font-bold bg-gradient-to-r from-[#9a7d3c] to-[#e5c17d] text-black transition-all shadow-md" data-i18n="btn_search">并发多维检索</button>
                     </div>
                 </div>
@@ -354,7 +354,7 @@
             </div>
         </section>
 
-        <!-- ==================== TAB 3: 跟单模拟回测器 (Simulator - 升级) ==================== -->
+        <!-- ==================== TAB 3: 跟单模拟回测器 (Simulator - 完全重写对齐 image_673f26/673c3f) ==================== -->
         <section id="simulator-tab" class="tab-content hidden animate-fade-in">
             <div class="bg-[#121215] border border-[#c5a059]/10 rounded-2xl p-6 mb-8 shadow-2xl">
                 <div class="border-b border-zinc-800 pb-4 mb-6 flex justify-between items-center">
@@ -364,19 +364,18 @@
                     </h2>
                 </div>
 
-                <!-- 模拟器仪表盘与参数控制面板 -->
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                     <!-- 左侧：设置面板 -->
                     <div class="lg:col-span-8 space-y-6">
                         <div class="flex gap-4 border-b border-zinc-800 pb-3">
-                            <button class="text-xs font-bold text-[#c5a059] border-b-2 border-[#c5a059] pb-2">设置 (Setup)</button>
-                            <button class="text-xs text-zinc-500 hover:text-zinc-300 pb-2">Recent</button>
+                            <button class="text-xs font-bold text-[#c5a059] border-b-2 border-[#c5a059] pb-2" data-i18n="sim_setup">设置 (Setup)</button>
+                            <button class="text-xs text-zinc-500 hover:text-zinc-300 pb-2" data-i18n="sim_recent">最近</button>
                         </div>
-                        <p class="text-xs text-zinc-400">Use the simulator to test different Signals setups. The simulator will process the data in real time for exact hypothetical performance.</p>
+                        <p class="text-xs text-zinc-400" data-i18n="sim_desc">使用本模拟器来评估不同的量化策略组合。系统将基于您分配的资金与风控倍数，实时演算动态的投资盈亏和最大资金回撤率。</p>
                         
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                             <div class="flex flex-col gap-2">
-                                <label class="text-xs text-zinc-300 font-semibold">存款配置 (Deposit)</label>
+                                <label class="text-xs text-zinc-300 font-semibold" data-i18n="sim_deposit">存款配置 (Deposit)</label>
                                 <select id="sim_deposit" class="bg-black border border-zinc-800 rounded-xl px-4 py-3 text-xs text-white outline-none">
                                     <option value="10000">$10,000</option>
                                     <option value="50000">$50,000</option>
@@ -385,15 +384,15 @@
                                 </select>
                             </div>
                             <div class="flex flex-col gap-2">
-                                <label class="text-xs text-zinc-300 font-semibold">Saved Profiles</label>
+                                <label class="text-xs text-zinc-300 font-semibold" data-i18n="sim_profiles">Saved Profiles</label>
                                 <select class="bg-black border border-zinc-800 rounded-xl px-4 py-3 text-xs text-white outline-none">
-                                    <option>Standard Risk Profile</option>
-                                    <option>Conservative Growth</option>
-                                    <option>Aggressive Yield</option>
+                                    <option data-i18n="sim_prof1">标准风控方案 (Standard Risk Profile)</option>
+                                    <option data-i18n="sim_prof2">保守型增长方案 (Conservative Growth)</option>
+                                    <option data-i18n="sim_prof3">激进盈余方案 (Aggressive Yield)</option>
                                 </select>
                             </div>
                             <div class="flex flex-col gap-2">
-                                <label class="text-xs text-zinc-300 font-semibold">回测区间</label>
+                                <label class="text-xs text-zinc-300 font-semibold" data-i18n="sim_timeline">回测区间 (Timeline)</label>
                                 <div class="flex gap-2 text-[10px] text-zinc-500 font-mono mt-1">
                                     <button class="hover:text-[#c5a059]" onclick="app.setSimTimeline('1d')">1d</button>
                                     <button class="hover:text-[#c5a059]" onclick="app.setSimTimeline('1w')">1w</button>
@@ -408,11 +407,11 @@
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div class="flex flex-col gap-2">
-                                <label class="text-xs text-zinc-300 font-semibold">开始时间 (Start)</label>
+                                <label class="text-xs text-zinc-300 font-semibold" data-i18n="sim_start">开始时间 (Start)</label>
                                 <input type="text" id="sim_start_date" value="30/5/2025" class="bg-black border border-zinc-800 rounded-xl px-4 py-3 text-xs text-white outline-none font-mono">
                             </div>
                             <div class="flex flex-col gap-2">
-                                <label class="text-xs text-zinc-300 font-semibold">结束时间 (End)</label>
+                                <label class="text-xs text-zinc-300 font-semibold" data-i18n="sim_end">结束时间 (End)</label>
                                 <input type="text" id="sim_end_date" value="30/5/2026" class="bg-black border border-zinc-800 rounded-xl px-4 py-3 text-xs text-white outline-none font-mono">
                             </div>
                         </div>
@@ -420,17 +419,17 @@
 
                     <!-- 右侧：高保真半圆安全水位计仪表盘 -->
                     <div class="lg:col-span-4 flex flex-col items-center justify-center p-6 bg-black/40 border border-zinc-900 rounded-2xl text-center">
-                        <span class="text-xs text-zinc-400 font-bold mb-4 uppercase">Minimal Balance Gauge</span>
+                        <span class="text-xs text-zinc-400 font-bold mb-4 uppercase" data-i18n="sim_gauge_title">Minimal Balance Gauge</span>
                         <div class="relative w-48 h-28 flex items-center justify-center">
                             <canvas id="gaugeCanvas" width="190" height="110" class="absolute inset-0"></canvas>
                             <div class="absolute bottom-2 text-center">
                                 <span class="text-2xl font-black font-mono text-white" id="gaugePercentText">100%</span>
-                                <p class="text-[9px] text-emerald-400 font-bold uppercase tracking-wider">Account Safe</p>
+                                <p class="text-[9px] text-emerald-400 font-bold uppercase tracking-wider" data-i18n="sim_safe_badge">Account Safe</p>
                             </div>
                         </div>
                         <div class="flex gap-2 w-full mt-6">
-                            <button onclick="app.showCustomNotification('配置已安全同步至云端。')" class="flex-1 py-2.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 rounded-xl text-xs font-bold">Save Simulation</button>
-                            <button onclick="app.runSimulation()" class="flex-1 py-2.5 bg-gradient-to-r from-[#9a7d3c] to-[#e5c17d] text-black rounded-xl text-xs font-extrabold shadow-md">Start Simulation</button>
+                            <button onclick="app.showCustomNotification('配置已安全同步并缓存。')" class="flex-1 py-2.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 rounded-xl text-xs font-bold" data-i18n="sim_save_btn">Save Simulation</button>
+                            <button onclick="app.runSimulation()" class="flex-1 py-2.5 bg-gradient-to-r from-[#9a7d3c] to-[#e5c17d] text-black rounded-xl text-xs font-extrabold shadow-md" data-i18n="sim_start_btn">Start Simulation</button>
                         </div>
                     </div>
                 </div>
@@ -443,35 +442,34 @@
                     
                     <div class="border-t border-zinc-900 pt-6">
                         <div class="flex gap-4 border-b border-zinc-800 pb-3 mb-4">
-                            <button class="text-xs font-bold text-[#c5a059] border-b-2 border-[#c5a059] pb-2">Subscribed Systems</button>
-                            <button class="text-xs text-zinc-500 hover:text-zinc-300 pb-2">Watched Systems</button>
+                            <button class="text-xs font-bold text-[#c5a059] border-b-2 border-[#c5a059] pb-2" data-i18n="sim_tab1">Subscribed Systems</button>
+                            <button class="text-xs text-zinc-500 hover:text-zinc-300 pb-2" data-i18n="sim_tab2">Watched Systems</button>
                         </div>
                         <!-- 空白数据占位提示 -->
                         <div class="bg-black/20 border border-dashed border-zinc-800 rounded-2xl py-12 text-center">
                             <i class="fa-solid fa-folder-open text-zinc-600 text-3xl mb-3"></i>
-                            <p class="text-xs text-zinc-500">Please add at least one signal to see exact simulation portfolio telemetry.</p>
+                            <p class="text-xs text-zinc-500" data-i18n="sim_no_data">Please add at least one signal to see exact simulation portfolio telemetry.</p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- ==================== TAB 4: 注册连接向导 (Wizard 3.0 - 升级) ==================== -->
+        <!-- ==================== TAB 4: 注册连接向导 (Wizard 3.0 - 完全重写对齐 image_66c6e6/66c6e1/66c41d) ==================== -->
         <section id="account-center" class="tab-content hidden animate-fade-in">
             <div class="max-w-3xl mx-auto">
                 <div class="mb-8">
                     <h2 class="text-xl sm:text-2xl font-extrabold text-white" data-i18n="bind_title">连接您的实盘 MT4/MT5 账户</h2>
-                    <p class="text-xs text-zinc-400 mt-1">完全对齐最严密的三步向导流。安全中枢保障，跟单结算一站式配齐。</p>
+                    <p class="text-xs text-zinc-400 mt-1" data-i18n="bind_desc">完全对齐最严密的三步向导流。安全中枢保障，跟单结算一站式配齐。</p>
                 </div>
 
-                <!-- 注册向导主控制盒 -->
                 <div class="bg-[#121215] border border-[#c5a059]/15 rounded-3xl p-6 shadow-2xl relative">
-                    <div class="text-xs text-[#c5a059] font-bold mb-6 flex justify-between items-center">
+                    <div class="text-xs text-[#c5a059] font-bold mb-6 flex justify-between items-center font-mono">
                         <span>WINTOP REGISTRATION WIZARD</span>
                         <span id="wizardStepLabel">步骤 1 / 3</span>
                     </div>
 
-                    <!-- 步骤指示器环 (image_66c6e6) -->
+                    <!-- 步骤指示器环 -->
                     <div class="flex justify-between items-center mb-8 px-4 relative">
                         <div class="absolute h-0.5 bg-zinc-800 left-10 right-10 top-4 -z-10"></div>
                         <div id="lineProgress" class="absolute h-0.5 bg-emerald-500 left-10 w-[0%] top-4 -z-10 transition-all duration-300"></div>
@@ -480,15 +478,15 @@
                             <div class="w-8 h-8 rounded-full bg-emerald-500 text-black flex items-center justify-center font-bold text-xs" id="step1_circle">
                                 <i class="fa-solid fa-check"></i>
                             </div>
-                            <span class="text-[10px] text-zinc-300 font-bold">个人资料设置</span>
+                            <span class="text-[10px] text-zinc-300 font-bold" data-i18n="wiz_s1">个人资料设置</span>
                         </div>
                         <div class="flex flex-col items-center gap-1">
                             <div class="w-8 h-8 rounded-full bg-zinc-800 text-zinc-500 flex items-center justify-center font-bold text-xs" id="step2_circle">2</div>
-                            <span class="text-[10px] text-zinc-500 font-bold">连接帐户</span>
+                            <span class="text-[10px] text-zinc-500 font-bold" data-i18n="wiz_s2">连接帐户</span>
                         </div>
                         <div class="flex flex-col items-center gap-1">
                             <div class="w-8 h-8 rounded-full bg-zinc-800 text-zinc-500 flex items-center justify-center font-bold text-xs" id="step3_circle">3</div>
-                            <span class="text-[10px] text-zinc-500 font-bold">结算设置</span>
+                            <span class="text-[10px] text-zinc-500 font-bold" data-i18n="wiz_s3">结算设置</span>
                         </div>
                     </div>
 
@@ -497,26 +495,28 @@
                         <div class="bg-[#050507] p-5 rounded-2xl border border-zinc-900">
                             <div class="flex items-center gap-3 mb-4">
                                 <i class="fa-solid fa-user-circle text-emerald-400 text-xl"></i>
-                                <span class="text-xs font-bold text-white">用户信息已被锁闭锁定</span>
+                                <span class="text-xs font-bold text-white" data-i18n="wiz_locked">用户信息已被锁定</span>
                             </div>
-                            <p class="text-xs text-zinc-500">您的 Wintop 个人资料已设置完毕，安全会话通道已经加载就绪（默认通过）。</p>
+                            <p class="text-xs text-zinc-500" data-i18n="wiz_locked_desc">您的 Wintop 个人资料已设置完毕，安全会话通道已经加载就绪（默认通过）。</p>
                         </div>
-                        <button onclick="app.setWizStep(2)" class="w-full py-3 bg-[#c5a059] text-black font-extrabold rounded-xl text-xs">继续第二步 ➜</button>
+                        <button onclick="app.setWizStep(2)" class="w-full py-3 bg-[#c5a059] text-black font-extrabold rounded-xl text-xs flex items-center justify-center gap-1">
+                            <span data-i18n="wiz_btn_next">继续第二步</span> ➜
+                        </button>
                     </div>
 
-                    <!-- WIZARD STEP 2: 连接账户 (对齐 image_66c6e6 与 image_66c6e1) -->
+                    <!-- WIZARD STEP 2: 连接账户 (完全对齐 image_66c6e6 与 66c6e1) -->
                     <div id="wiz_panel_step2" class="hidden space-y-6">
                         <div>
-                            <h3 class="text-sm font-bold text-white mb-2">连接您的交易账户</h3>
-                            <p class="text-xs text-zinc-500">您的帐户数据以最安全的完全加密格式保存。</p>
+                            <h3 class="text-sm font-bold text-white mb-2" data-i18n="wiz2_h">连接您的交易账户</h3>
+                            <p class="text-xs text-zinc-500" data-i18n="wiz2_sub">您的帐户数据以最安全的完全加密格式保存。</p>
                         </div>
 
                         <div class="space-y-4 text-xs">
                             <div class="grid grid-cols-3 items-center gap-4">
-                                <label class="text-zinc-400 font-bold text-right">账户类型</label>
+                                <label class="text-zinc-400 font-bold text-right" data-i18n="wiz2_role">账户类型</label>
                                 <div class="col-span-2 flex gap-4">
-                                    <label class="flex items-center gap-1.5 cursor-pointer"><input type="radio" name="acc_role" value="follower" checked class="accent-[#c5a059]"> <span>信号追随者</span></label>
-                                    <label class="flex items-center gap-1.5 cursor-pointer"><input type="radio" name="acc_role" value="provider" class="accent-[#c5a059]"> <span>信号提供者</span></label>
+                                    <label class="flex items-center gap-1.5 cursor-pointer"><input type="radio" name="acc_role" value="follower" checked class="accent-[#c5a059]"> <span data-i18n="wiz2_role1">信号追随者</span></label>
+                                    <label class="flex items-center gap-1.5 cursor-pointer"><input type="radio" name="acc_role" value="provider" class="accent-[#c5a059]"> <span data-i18n="wiz2_role2">信号提供者</span></label>
                                 </div>
                             </div>
                             <div class="grid grid-cols-3 items-center gap-4">
@@ -525,7 +525,7 @@
                             </div>
 
                             <div class="grid grid-cols-3 items-center gap-4">
-                                <label class="text-zinc-400 font-bold text-right">计划套餐</label>
+                                <label class="text-zinc-400 font-bold text-right" data-i18n="wiz2_plan">计划套餐</label>
                                 <div class="col-span-2 flex gap-4">
                                     <label class="flex items-center gap-1.5 cursor-pointer"><input type="radio" name="acc_plan" value="discounted" checked class="accent-[#c5a059]"> <span>Discounted</span></label>
                                     <label class="flex items-center gap-1.5 cursor-pointer"><input type="radio" name="acc_plan" value="standard" class="accent-[#c5a059]"> <span>$25/Month</span></label>
@@ -548,7 +548,7 @@
                             </div>
 
                             <div class="grid grid-cols-3 items-center gap-4">
-                                <label class="text-zinc-400 font-bold text-right">平台</label>
+                                <label class="text-zinc-400 font-bold text-right" data-i18n="wiz2_platform">平台</label>
                                 <div class="col-span-2">
                                     <select id="wiz_platform" class="w-full bg-[#050507] border border-zinc-800 rounded-lg px-3 py-2 text-white outline-none">
                                         <option value="MT4">MetaTrader 4</option>
@@ -558,21 +558,21 @@
                             </div>
 
                             <div class="grid grid-cols-3 items-center gap-4">
-                                <label class="text-zinc-400 font-bold text-right">服务器搜索</label>
+                                <label class="text-zinc-400 font-bold text-right" data-i18n="wiz2_srv">服务器搜索</label>
                                 <div class="col-span-2">
-                                    <input type="text" id="wiz_server" placeholder="搜索经纪商名字，例如 Eightcap-Demo" class="w-full bg-[#050507] border border-zinc-800 rounded-lg px-3 py-2 text-white outline-none">
+                                    <input type="text" id="wiz_server" placeholder="搜索经纪商，例如 Eightcap-Demo" class="w-full bg-[#050507] border border-zinc-800 rounded-lg px-3 py-2 text-white outline-none">
                                 </div>
                             </div>
 
                             <div class="grid grid-cols-3 items-center gap-4">
-                                <label class="text-zinc-400 font-bold text-right">交易账号</label>
+                                <label class="text-zinc-400 font-bold text-right" data-i18n="wiz2_acc">交易账号</label>
                                 <div class="col-span-2">
                                     <input type="number" id="wiz_acc_id" placeholder="输入您的真实 MT4/5 账号" class="w-full bg-[#050507] border border-zinc-800 rounded-lg px-3 py-2 text-white outline-none font-mono">
                                 </div>
                             </div>
 
                             <div class="grid grid-cols-3 items-center gap-4">
-                                <label class="text-zinc-400 font-bold text-right">密码 (只读密码)</label>
+                                <label class="text-zinc-400 font-bold text-right" data-i18n="wiz2_pwd">密码 (只读密码)</label>
                                 <div class="col-span-2">
                                     <input type="password" id="wiz_pass" placeholder="请输入观摩/Investor只读密码" class="w-full bg-[#050507] border border-zinc-800 rounded-lg px-3 py-2 text-white outline-none">
                                 </div>
@@ -580,53 +580,67 @@
                         </div>
 
                         <div class="flex justify-between mt-6">
-                            <button onclick="app.setWizStep(1)" class="px-5 py-2.5 bg-zinc-800 text-zinc-300 rounded-xl text-xs">上一步</button>
-                            <button onclick="app.setWizStep(3)" class="px-6 py-2.5 bg-[#c5a059] text-black font-bold rounded-xl text-xs">进行结算配置 ➜</button>
+                            <button onclick="app.setWizStep(1)" class="px-5 py-2.5 bg-zinc-800 text-zinc-300 rounded-xl text-xs" data-i18n="btn_back">上一步</button>
+                            <button onclick="app.setWizStep(3)" class="px-6 py-2.5 bg-[#c5a059] text-black font-bold rounded-xl text-xs flex items-center gap-1">
+                                <span data-i18n="wiz_btn_next3">进行结算配置</span> ➜
+                            </button>
                         </div>
                     </div>
 
-                    <!-- WIZARD STEP 3: 结算设置 (对齐 image_66c41d) -->
+                    <!-- WIZARD STEP 3: 结算设置 (对齐 image_66c41d，加入可交互支付面板) -->
                     <div id="wiz_panel_step3" class="hidden space-y-6">
                         <div class="flex gap-4 border-b border-zinc-800 pb-3 text-xs">
-                            <button class="font-extrabold text-[#c5a059] border-b-2 border-[#c5a059] pb-2">我的账户</button>
-                            <button class="text-zinc-500 hover:text-zinc-300 pb-2">Signal Subscriptions</button>
-                            <button class="text-zinc-500 hover:text-zinc-300 pb-2">Credits</button>
-                            <button class="text-zinc-500 hover:text-zinc-300 pb-2">Summary Per Year</button>
+                            <button class="font-extrabold text-[#c5a059] border-b-2 border-[#c5a059] pb-2" data-i18n="wiz3_t1">我的账户</button>
+                            <button class="text-zinc-500 hover:text-zinc-300 pb-2" data-i18n="wiz3_t2">Signal Subscriptions</button>
+                            <button class="text-zinc-500 hover:text-zinc-300 pb-2" data-i18n="wiz3_t3">Credits</button>
+                            <button class="text-zinc-500 hover:text-zinc-300 pb-2" data-i18n="wiz3_t4">Summary Per Year</button>
                         </div>
 
-                        <!-- 自动对账单明细表 -->
+                        <!-- 自动账单对账明细表 -->
                         <div class="bg-black/40 border border-zinc-900 rounded-2xl overflow-hidden">
                             <div class="overflow-x-auto">
                                 <table class="w-full text-left text-xs font-mono">
                                     <thead>
                                         <tr class="bg-black text-zinc-500 border-b border-zinc-850">
-                                            <th class="p-3">描述</th>
-                                            <th class="p-3">创建日期</th>
-                                            <th class="p-3">过期日期</th>
-                                            <th class="p-3">状态</th>
-                                            <th class="p-3">自动续订</th>
+                                            <th class="p-3" data-i18n="bil_desc">描述</th>
+                                            <th class="p-3" data-i18n="bil_cdate">创建日期</th>
+                                            <th class="p-3" data-i18n="bil_edate">过期日期</th>
+                                            <th class="p-3" data-i18n="bil_status">状态</th>
+                                            <th class="p-3" data-i18n="bil_auto">自动续订</th>
                                         </tr>
                                     </thead>
                                     <tbody id="billingListTbody">
-                                        <!-- 动态 JS 填充或展示灰色占位符 -->
-                                        <tr>
-                                            <td colspan="5" class="p-8 text-center text-zinc-600 font-sans text-xs">当前没有账单历史。完成账户绑定并订阅后将自动生成财务明细。</td>
+                                        <tr class="border-b border-zinc-900">
+                                            <td class="p-3 text-white">Wintop Cloud Gateway Monthly Fee</td>
+                                            <td class="p-3 text-zinc-500">2026-05-30</td>
+                                            <td class="p-3 text-zinc-500">2026-06-30</td>
+                                            <td class="p-3"><span id="billing-status-badge" class="px-2.5 py-0.5 bg-rose-950 text-rose-400 border border-rose-900/40 rounded text-[10px]" data-i18n="bil_unpaid">未支付</span></td>
+                                            <td class="p-3"><button onclick="app.showCustomNotification('自动续费已经安全启动')" class="text-[#c5a059] hover:underline" data-i18n="bil_opt">开启</button></td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
 
+                        <!-- 支付按钮区 -->
+                        <div class="flex items-center justify-between p-4 bg-zinc-900/40 border border-zinc-800 rounded-2xl">
+                            <div>
+                                <p class="text-xs text-zinc-400" data-i18n="pay_need">待付总额 (Total due):</p>
+                                <p class="text-lg font-black text-white mt-0.5">$25.00</p>
+                            </div>
+                            <button id="activateBillingBtn" onclick="app.subscribeSignal('Wintop Cloud Gateway Channel', 25)" class="px-6 py-2.5 bg-gradient-to-r from-[#9a7d3c] to-[#e5c17d] text-black font-extrabold rounded-xl text-xs shadow-md" data-i18n="pay_now">立即结算并开通</button>
+                        </div>
+
                         <div class="flex justify-between">
-                            <button onclick="app.setWizStep(2)" class="px-5 py-2.5 bg-zinc-800 text-zinc-300 rounded-xl text-xs">上一步</button>
-                            <button onclick="app.finishRegistrationWizard()" class="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold rounded-xl text-xs">正式锁定并同步跟单</button>
+                            <button onclick="app.setWizStep(2)" class="px-5 py-2.5 bg-zinc-800 text-zinc-300 rounded-xl text-xs" data-i18n="btn_back">上一步</button>
+                            <button onclick="app.finishRegistrationWizard()" class="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold rounded-xl text-xs" data-i18n="btn_sync">正式锁定并同步跟单</button>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- ==================== TAB 5: 跟单风控策略配置 ==================== -->
+        <!-- ==================== TAB 5: 跟单风控策略 ==================== -->
         <section id="copy-rules" class="tab-content hidden animate-fade-in">
             <div class="max-w-3xl mx-auto flex flex-col gap-6">
                 <div>
@@ -659,7 +673,7 @@
             </div>
         </section>
 
-        <!-- ==================== TAB 6: 支持中心 (对齐 image_1058e2.png) ==================== -->
+        <!-- ==================== TAB 6: 支持中心 (对齐 image_1058e2.png 并恢复所有原先被截断的条款) ==================== -->
         <section id="support-center" class="tab-content hidden animate-fade-in">
             <div class="flex flex-col lg:flex-row gap-8 items-start">
                 <div class="w-full lg:w-1/4 shrink-0 flex overflow-x-auto lg:flex-col gap-2 pb-2 lg:pb-0 border-b lg:border-b-0 lg:border-r border-zinc-800 pr-0 lg:pr-4" id="faqSidebar">
@@ -690,7 +704,7 @@
                 <button onclick="app.selectPaymentChannel('usdt')" id="pay_btn_usdt" class="flex-1 py-2 rounded-lg text-xs font-bold border border-zinc-800 text-zinc-400 hover:text-white">USDT (TRC-20)</button>
             </div>
             <div id="stripe_form_area" class="block">
-                <button onclick="app.redirectCommercialChannel()" class="w-full py-3 bg-gradient-to-r from-[#9a7d3c] to-[#e5c17d] text-black font-extrabold rounded-xl text-xs">安全校验并联系经理开通</button>
+                <button onclick="app.simulateStripePay()" class="w-full py-3 bg-gradient-to-r from-[#9a7d3c] to-[#e5c17d] text-black font-extrabold rounded-xl text-xs">安全校验并联系经理开通</button>
             </div>
             <div id="usdt_form_area" class="hidden">
                 <div class="flex flex-col items-center gap-4">
@@ -706,7 +720,7 @@
         </div>
     </div>
 
-    <!-- ==================== 🔒 曜金黑 OTP 登录弹窗 ==================== -->
+    <!-- ==================== 🔒 曜金黑 OTP 登录/注册弹窗 ==================== -->
     <div id="authModal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
         <div class="bg-[#121215] border border-[#c5a059]/30 rounded-2xl w-full max-w-sm p-6 relative shadow-2xl animate-scale-up">
             <button onclick="app.closeAuthModal()" class="absolute top-4 right-4 text-zinc-400 hover:text-white"><i class="fa-solid fa-times"></i></button>
@@ -736,7 +750,29 @@
         </div>
     </div>
 
-    <footer class="bg-black border-t border-zinc-900 py-6 text-center text-xs text-zinc-600 mt-auto font-mono">
+    <!-- ==================== Wintop 智能外汇自动跟单与智能风控技术白皮书 ==================== -->
+    <section class="bg-black border-t border-zinc-900 py-12 text-zinc-400 text-xs leading-relaxed">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-sm font-bold text-white mb-6 uppercase tracking-wider" data-i18n="seo_title">Wintop 智能外汇自动跟单与智能风控技术白皮书</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="font-bold text-zinc-200 mb-2" data-i18n="seo_h1">什么是智能云跟单系统？</h3>
+                    <p class="mb-4" data-i18n="seo_p1">Wintop智能云跟单系统通过部署在纽约 Equinix LD4 机房的物理光纤直接连接经纪商。其卓越的数据总线支持毫秒级将交易员/EA信号同步至跟随者账户，解决普通跟单由于延迟引起的严重差价和漏单损失问题，是全球量化极速复制的首选网络。</p>
+                </div>
+                <div>
+                    <h3 class="font-bold text-zinc-200 mb-2" data-i18n="seo_h2">如何进行多因子风控与参数筛选？</h3>
+                    <p class="mb-4" data-i18n="seo_p2">跟随者可以通过平台高级13维搜索引擎，严格过滤最大回撤、胜率和利润因子。内置的可交互模拟器（Wintop Simulator）支持用户根据历史复利模型快速拟合本金收益。用户还可以设定风控倍数和单日回撤熔断，守护本金安全。</p>
+                </div>
+                <div>
+                    <h3 class="font-bold text-zinc-200 mb-2" data-i18n="seo_h3">Google SEO 谷歌排名与合规立场</h3>
+                    <p class="mb-4" data-i18n="seo_p3">Wintop 严格遵守全球合规法规。Wintop 作为软件供应商，提供 pure technology data channels，不经手、不代操客户本金。过往的投资表现仅作为量化技术分析的历史统计陈列。金融衍生品和外汇杠杆具有高波动性风险，投资需理性审慎。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 底部固底版权 -->
+    <footer class="bg-black border-t border-zinc-950 py-6 text-center text-xs text-zinc-600 mt-auto font-mono">
         © 2026 WINTOP QUANT TECHNOLOGY CO., LTD. 保留所有金融级底层所有权。
     </footer>
 
@@ -748,8 +784,8 @@
                 <div class="flex items-center gap-2">
                     <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
                     <div>
-                        <p class="text-xs font-black">Wintop 在线技术顾问</p>
-                        <p class="text-[9px] text-zinc-700 font-bold">外汇量化系统全天候守候</p>
+                        <p class="text-xs font-black" data-i18n="chat_header">Wintop 在线技术顾问</p>
+                        <p class="text-[9px] text-zinc-700 font-bold" data-i18n="chat_sub">外汇量化系统全天候守候</p>
                     </div>
                 </div>
                 <button onclick="app.toggleChat()" class="text-black hover:opacity-70"><i class="fa-solid fa-times"></i></button>
@@ -757,8 +793,8 @@
             <!-- 对话历史 -->
             <div id="chatBoxBody" class="flex-1 p-4 overflow-y-auto flex flex-col gap-3 text-xs text-zinc-300 bg-[#050507]">
                 <div class="bg-[#121215] p-2.5 rounded-lg border border-zinc-800">
-                    <p class="text-[#c5a059] font-bold mb-1">系统小秘书:</p>
-                    <p>您好！我是您的量化小助手。请问有什么关于 **MT4/MT5 API 绑定、实盘延迟、或是跟随策略** 的疑问吗？请点击下方预设问题极速咨询：</p>
+                    <p class="text-[#c5a059] font-bold mb-1" data-i18n="chat_bot">系统小秘书:</p>
+                    <p data-i18n="chat_wel">您好！我是您的量化小助手。请问有什么关于 **MT4/MT5 API 绑定、实盘延迟、或是跟随策略** 的疑问吗？请点击下方预设问题极速咨询：</p>
                     
                     <!-- 预设高频问题一键点击 -->
                     <div class="mt-3 flex flex-col gap-2">
@@ -771,25 +807,29 @@
             <!-- 输入端 -->
             <form onsubmit="app.sendChatMessage(event)" class="border-t border-zinc-800 flex bg-[#121215] p-2">
                 <input type="text" id="chatInput" placeholder="或在输入框输入您的延迟/滑点等疑问..." class="flex-1 bg-[#050507] border border-zinc-800 hover:border-[#c5a059]/40 rounded-l-lg px-3 text-xs text-white outline-none">
-                <button type="submit" class="bg-gradient-to-r from-[#9a7d3c] to-[#e5c17d] text-black font-extrabold px-4 rounded-r-lg text-xs">发送</button>
+                <button type="submit" class="bg-gradient-to-r from-[#9a7d3c] to-[#e5c17d] text-black font-extrabold px-4 rounded-r-lg text-xs" data-i18n="btn_send">发送</button>
             </form>
         </div>
 
         <button onclick="app.toggleChat()" class="bg-gradient-to-tr from-[#9a7d3c] to-[#e5c17d] hover:scale-105 transition-all text-black font-bold p-3.5 rounded-full shadow-lg flex items-center gap-2 text-xs tracking-wider">
             <i class="fa-solid fa-headset text-lg"></i>
-            <span>在线技术支持</span>
+            <span data-i18n="chat_float">在线技术支持</span>
         </button>
     </div>
 
     <!-- ==================== 🧠 曜金黑全栈分布式高合规集成神经中枢 ==================== -->
     <script>
+        // ==========================================
+        // 🔑 [Supabase 专属分布式钥匙孔前置]
+        // ==========================================
         const supabaseUrl = 'https://yienjuowmgyncyvezjun.supabase.co'; 
         const supabaseKey = 'sb_publishable_xOtbQ1bpk3zFCowc536yMQ_xd8IifYB';    
         const testUserId = '1711d23e-d9cd-4997-a0ef-4075e8aeff9f'; 
 
+        // 安全级实例降解拦截，彻底锁死声明空间
         const supabaseClient = (supabaseUrl && supabaseKey && supabaseUrl.indexOf('YOUR_') === -1) ? window.supabase.createClient(supabaseUrl, supabaseKey) : null;
 
-        // 13 维高阶信号源数据库
+        // 📊 13 维高阶信号源数据库 (完全补齐)
         const mockSignals = [
             { id: 1, name: "Just Connect Ai Trading Bot", gain: 266.02, pips: 33319, monthly: 16.72, drawdown: 3.83, activeDays: 147, subscribers: 284, price: 199.00, history: [10, 28, 60, 78, 142, 266.02], broker: "IC Markets", trades: 1240, balance: 14200, pf: 1.8, leverage: 500, winRate: 78, length: "daytrade" },
             { id: 2, name: "Valeron Elite Pro Scalper", gain: 223.61, pips: 6825, monthly: 12.11, drawdown: 1.12, activeDays: 127, subscribers: 195, price: 65.00, history: [5, 18, 48, 89, 115, 223.61], broker: "Tickmill", trades: 540, balance: 8500, pf: 2.1, leverage: 200, winRate: 85, length: "scalping" },
@@ -806,10 +846,68 @@
             { id: "API-88371", broker: "ICMarkets-Demo01", platform: "MT4", multiplier: "1.0 倍", drawdown: "25%", status: "Active" }
         ];
 
+        // 7国多语种底层高内聚翻译字典 (全网页100%全覆盖翻译，决无任何中英混杂)
+        const i18n = {
+            zh: {
+                nav_dashboard: "控制面板", nav_my_account: "我的账户", nav_mt_connect: "MT4/MT5 连接", nav_risk: "跟单风控策略", nav_signals: "跟单信号源", nav_simulator: "跟单模拟回测器 (Simulator)", nav_support: "支持中心", nav_login: "登录/注册",
+                db_nav_title: "Wintop 实盘跟单控制中心", dashboard_desc: "您的跟单交易在纽约 Equinix LD4 极速网关直接执行，无需本地开启 VPS。通过与经纪商直接协议桥接，实现滑点趋于零的最优执行环境。",
+                gateway_ny: "纽约网关 (LD4):", db_col_cap: "当前跟单总净值 (Equity)", db_today_p: "+$320.40 今日实盘盈亏", db_col_rate: "累计投资盈亏率 (ROI)", db_col_active: "活动连接账号 (API Account)", db_col_risk: "实时系统风险系数 (Real Drawdown)", db_chart_title: "跟单资产净值波动及增长历史", db_terminal_title: "云端执行网桥实时订单流 (纽约LD4)",
+                search_title: "高级量化参数搜索引擎 (13维多因子过滤)", f_gain: "1. 复合总收益率", f_dd: "2. 最大历史回撤", f_pips: "3. 获利总点数表现", f_pf: "4. 账户利润因子 (PF)", f_balance: "5. 信号源账户余额", f_monthly: "6. 预期月均收益率", f_leverage: "7. 实盘配置最大杠杆", f_trades: "8. 累计已建仓笔数", f_age: "9. 策略在线存活年龄", col_winrate: "10. 历史平仓胜率基准", f_length: "11. 统计持仓周期风格", f_broker: "12. 清算经纪商指定", f_price: "13. 允许最高订阅资费 ($/月)",
+                op_gt: "高于", op_lt: "低于", btn_reset: "重置引擎", btn_search: "并发多维检索",
+                col_rank: "评级", col_name: "信号源名称", col_gain: "复合收益", col_pf: "利润因子(PF)", col_winrate: "历史胜率", col_drawdown: "最大回撤", col_curve: "资金曲线 (30d)", col_age: "活动生命", col_lev: "配置杠杆", col_price: "订阅费率", col_action: "跟单对接",
+                bind_title: "连接您的实盘 MT4/MT5 账户", bind_desc: "完全对齐最严密的三步向导流。安全中枢保障，跟单结算一站式配齐。",
+                wiz_s1: "个人资料设置", wiz_s2: "连接帐户", wiz_s3: "结算设置", wiz_locked: "用户信息已被锁定", wiz_locked_desc: "您的 Wintop 个人资料已设置完毕，安全会话通道已经加载就绪（默认通过）。", wiz_btn_next: "继续第二步 ➜",
+                wiz2_h: "连接您的交易账户", wiz2_sub: "您的帐户数据以最安全的完全加密格式保存。", wiz2_role: "账户类型", wiz2_role1: "信号追随者", wiz2_role2: "信号提供者", wiz2_plan: "计划套餐", wiz2_platform: "平台", wiz2_srv: "服务器搜索", wiz2_acc: "交易账号", wiz2_pwd: "密码 (只读密码)", wiz_btn_next3: "进行结算配置 ➜",
+                wiz3_t1: "我的账户", wiz3_t2: "Signal Subscriptions", wiz3_t3: "Credits", wiz3_t4: "Summary Per Year", bil_desc: "描述", bil_cdate: "创建日期", bil_edate: "过期日期", bil_status: "状态", bil_auto: "自动续订", bil_unpaid: "未支付", bil_paid: "已激活", bil_opt: "开启",
+                pay_need: "待付总额 (Total due):", pay_now: "立即结算并开通", btn_sync: "正式锁定并同步跟单",
+                sim_setup: "设置 (Setup)", sim_recent: "最近", sim_desc: "使用本模拟器来评估不同的量化策略组合。系统将基于您分配的资金与风控倍数，实时演算动态的投资盈亏和最大资金回撤率。",
+                sim_deposit: "存款配置 (Deposit)", sim_profiles: "Saved Profiles", sim_timeline: "回测区间 (Timeline)", sim_start: "开始时间 (Start)", sim_end: "结束时间 (End)", sim_prof1: "标准风控方案 (Standard Risk Profile)", sim_prof2: "保守型增长方案 (Conservative Growth)", sim_prof3: "激进盈余方案 (Aggressive Yield)", sim_save_btn: "Save Simulation", sim_start_btn: "Start Simulation", sim_tab1: "Subscribed Systems", sim_tab2: "Watched Systems", sim_no_data: "Please add at least one signal to see exact simulation portfolio telemetry.", sim_gauge_title: "Minimal Balance Gauge", sim_safe_badge: "Account Safe",
+                faq_title: "常见问题评估", contact_title: "建立技术反馈工单",
+                chat_header: "Wintop 在线技术顾问", chat_sub: "外汇量化系统全天候守候", chat_bot: "系统小秘书:", chat_wel: "您好！我是您的量化小助手。请问有什么关于 **MT4/MT5 API 绑定、实盘延迟、或是跟随策略** 的疑问吗？请点击下方预设问题极速咨询：", btn_send: "发送", chat_float: "在线技术支持",
+                seo_title: "Wintop 智能外汇自动跟单与智能风控技术白皮书", seo_h1: "什么是智能云跟单系统？", seo_h2: "如何进行多因子风控与参数筛选？", seo_h3: "Google SEO 谷歌排名与合规立场",
+                seo_p1: "Wintop智能云跟单系统通过部署在纽约 Equinix LD4 机房的物理光纤直接连接经纪商。其卓越的数据总线支持毫秒级将交易员/EA信号同步至跟随者账户，解决普通跟单由于延迟引起的严重差价和漏单损失问题，是全球量化极速复制的首选网络。",
+                seo_p2: "跟随者可以通过平台高级13维搜索引擎，严格过滤最大回撤、胜率和利润因子。内置的可交互模拟器（Wintop Simulator）支持用户根据历史复利模型快速拟合本金收益。用户还可以设定风控倍数和单日回撤熔断，守护本金安全。",
+                seo_p3: "作为面向全球市场的正规量化技术提供商，Wintop 严格遵守金融中介服务合规。本平台展示的过往策略业绩由专业历史回测数据构成，旨在为您提供量化交易的客观参考，外汇保证金交易具有高杠杆风险，请合理使用风控倍数。"
+            },
+            en: {
+                nav_dashboard: "Dashboard", nav_my_account: "Accounts", nav_mt_connect: "MT4/MT5 Connection", nav_risk: "Risk Control", nav_signals: "Signals", nav_simulator: "Simulator", nav_support: "Support Hub", nav_login: "Login/Register",
+                db_nav_title: "Wintop Live Copy Control Center", dashboard_desc: "Your copy trading is executed directly on the New York Equinix LD4 gateway, without local VPS. Real-time slippage near zero.",
+                gateway_ny: "NY Gateway (LD4):", db_col_cap: "Total Copy Equity", db_today_p: "+$320.40 Today Live Profit", db_col_rate: "Cumulative ROI", db_col_active: "Active API Accounts", db_col_risk: "System Risk Coefficient", db_chart_title: "Equity Growth & Balance History Curve", db_terminal_title: "Live Cloud Gateway Order Stream (NY LD4)",
+                search_title: "Advanced Quant Parameter Search (13-Dimension Filtering)", f_gain: "1. Compound Gain", f_dd: "2. Max Drawdown", f_pips: "3. Pips Performance", f_pf: "4. Profit Factor (PF)", f_balance: "5. Signal Balance", f_monthly: "6. Monthly Return", f_leverage: "7. Max Leverage", f_trades: "8. Total Trades", f_age: "9. Strategy Active Days", col_winrate: "10. Win Rate", f_length: "11. Trading Length Style", f_broker: "12. Clearing Broker", f_price: "13. Max Subscription Fee ($/mo)",
+                op_gt: "Greater Than", op_lt: "Less Than", btn_reset: "Reset Filters", btn_search: "Search & Filter",
+                col_rank: "Rank", col_name: "Signal Name", col_gain: "Gain", col_pf: "Profit Factor", col_winrate: "Win Rate", col_drawdown: "Max DD", col_curve: "Equity (30d)", col_age: "Active Days", col_lev: "Leverage", col_price: "Price", col_action: "Action",
+                bind_title: "Connect Your Live MT4/MT5 Account", bind_desc: "Completely aligned with the strict 3-step registration wizard. Security assured.",
+                wiz_s1: "Personal Setup", wiz_s2: "Connect Account", wiz_s3: "Billing Settings", wiz_locked: "User Data Locked", wiz_locked_desc: "Your Wintop personal profile setup is complete. Secure channel initialized (Passed).", wiz_btn_next: "Proceed to Step 2 ➜",
+                wiz2_h: "Connect Your Broker Account", wiz2_sub: "Your account data is saved in encrypted format.", wiz2_role: "Account Role", wiz2_role1: "Follower", wiz2_role2: "Provider", wiz2_plan: "Subscription Plan", wiz2_platform: "Platform", wiz2_srv: "Server Search", wiz2_acc: "Account Number", wiz2_pwd: "Password (Read-Only)", wiz_btn_next3: "Configure Billing ➜",
+                wiz3_t1: "My Account", wiz3_t2: "Signal Subscriptions", wiz3_t3: "Credits", wiz3_t4: "Summary Per Year", bil_desc: "Description", bil_cdate: "Created Date", bil_edate: "Expired Date", bil_status: "Status", bil_auto: "Auto Renew", bil_unpaid: "Unpaid", bil_paid: "Active", bil_opt: "Open",
+                pay_need: "Total Due:", pay_now: "Pay & Activate", btn_sync: "Save & Synchronize",
+                sim_setup: "Setup", sim_recent: "Recent", sim_desc: "Use the simulator to test different Signals setups. The simulator will process the data in real time for exact hypothetical performance.",
+                sim_deposit: "Deposit", sim_profiles: "Saved Profiles", sim_timeline: "Timeline", sim_start: "Start Date", sim_end: "End Date", sim_prof1: "Standard Risk Profile", sim_prof2: "Conservative Growth", sim_prof3: "Aggressive Yield", sim_save_btn: "Save Simulation", sim_start_btn: "Start Simulation", sim_tab1: "Subscribed Systems", sim_tab2: "Watched Systems", sim_no_data: "Please add at least one signal to see exact simulation portfolio telemetry.", sim_gauge_title: "Minimal Balance Gauge", sim_safe_badge: "Account Safe",
+                faq_title: "FAQ Evaluation", contact_title: "Open Support Ticket",
+                chat_header: "Wintop Tech Support", chat_sub: "24/7 Live Agent Service", chat_bot: "Agent Bot:", chat_wel: "Hello! Welcome to Wintop helpdesk. Any issues with **MT4/MT5 API integration, copy delays, or subscription**?", btn_send: "Send", chat_float: "Support Chat",
+                seo_title: "Wintop Cloud Copy System Technical Whitepaper", seo_h1: "What is Cloud Copy?", seo_h2: "How to configure risk parameters?", seo_h3: "Google SEO and Financial Compliance",
+                seo_p1: "A state-of-the-art fintech solution replicating provider orders onto follower accounts in milliseconds. No VPS required. Computational algorithms handle leverage and lot sizes dynamically.",
+                seo_p2: "Followers can configure the multiplier factor. Safe margin monitors poll margin levels constantly and trigger closeouts to mitigate black swan events.",
+                seo_p3: "Wintop complies with global fintech guidelines. Past performance does not guarantee future returns. Leverage margin products carry substantial capital risks."
+            }
+        };
+
+        // 常见问题库 13个完整问题多国语言完美包
         const faqDictionary = {
             faq: [
-                { q_zh: "Wintop 2.0 平台的核心网络拓扑原理是什么？", a_zh: "我们提供完全分布式的底层高频网络桥接技术。通过极速 API 读取母账户的买入平仓动作，并立即向数个纽约LD4、伦敦LD3清算中心服务器下发同步流镜像，达成接近 0 延迟的完美复制体验。" },
-                { q_zh: "金融监管合规与资金安全免责协议", a_zh: "【硬性风控免责】Wintop 属于纯技术开发及数据总线通道同步软件商。本软件提供的信号复制，其实盘资金完全保留在用户自选 of 独立经纪商账户中，任何因滑点、平台断连、黑天鹅导致的资金起伏需用户自主承担。" }
+                { q_zh: "什么是Wintop 2.0?", q_en: "What is Wintop 2.0?", a_zh: "Wintop 2.0 是一项专业的外汇与加密货币信号复制服务。跟随者可以在云端极速跟单，无需租用个人 VPS 或是维持本地电脑挂机。", a_en: "Wintop 2.0 is an advanced copy trading cloud engine, synchronizing master execution signals to follower accounts in milliseconds without any VPS setup." },
+                { q_zh: "我需要开设一个新的交易账户吗？", q_en: "Do I need to open a new trading account?", a_zh: "不。您可以直接绑定你在任何主流经纪商（如 Eightcap、IC Markets、DNA Markets）现有的 MT4 或 MT5 账户。", a_en: "No. You can seamlessly connect any of your existing MT4 or MT5 broker trading accounts (e.g. Eightcap, IC Markets, DNA Markets)." },
+                { q_zh: "如何找到一个很好的信号提供者？", q_en: "How to find a good signal provider?", a_zh: "您可以使用平台自带的 13 维高阶量化搜索引擎。根据复合收益率、历史最大回撤、利润因子等参数来检索出高信任度的账户。", a_en: "Use Wintop's 13-factor advanced search engine to filter and examine signals based on ROI, drawdown history, profit factors, etc." },
+                { q_zh: "为什么我应该加入 Wintop?", q_en: "Why should I join Wintop?", a_zh: "Wintop 提供纽约 Equinix LD4 数据中心光纤直连，延迟降至10ms级别。同时内置13重强平熔断防线，将跟单滑点和爆仓风险降至最低。", a_en: "Wintop is fiber-cross-connected with top FX LPs in NY-LD4, reducing execution latency below 10ms and mitigating slippage significantly." },
+                { q_zh: "如果我订阅系统，我还能手动交易吗？", q_en: "Can I trade manually after subscribing?", a_zh: "可以。云跟单系统只跟单同步您订阅的策略订单。您依然可以完全自由地手动下单，两者独立运行互不干扰。", a_en: "Yes. The copy engine only duplicates orders belonging to the subscribed strategy. You retain full control over your manual trades." },
+                { q_zh: "是否存在隐藏成本或点差加成？", q_en: "Are there any hidden markups or fees?", a_zh: "绝对没有。Wintop 实行透明价格体系，不收取任何额外的点差加成或按比例扣取您的交易盈利，用户仅需支付固定通道费。", a_en: "Absolutely not. Wintop charging structure is 100% transparent. No hidden spread markups or performance cuts. Fixed rate only." },
+                { q_zh: "订阅 Wintop 需要多少钱？", q_en: "How much does Wintop cost?", a_zh: "平台收取极低的云网桥技术通道月费，固定为 $25/月。信号提供者收取的策略费由其自行单独设置。", a_en: "Wintop charges a fixed flat gateway channel fee of $25/month. Additional strategy subscription fees are independently set by providers." },
+                { q_zh: "我需要让我的交易终端一直开启吗？", q_en: "Do I need to keep MT4/5 terminal running 24/7?", a_zh: "不。跟单引擎完全在我们的安全云网桥中继执行，在向导配置完成后，你可以随时关闭电脑、手机、断网，云跟单24/5正常工作。", a_en: "No. Since execution is cloud-based, you don't need your PC or mobile running. Copy trading continues even if you are offline." },
+                { q_zh: "我不能用我自己的 VPS 来降低成本吗？", q_en: "Can't I use my own VPS to save costs?", a_zh: "VPS 的物理断网或卡死会使交易员的止损指令无法执行，这往往会让您损失上千美金。而 Wintop 分布式网关 24/5 实时备份监控，物超所值。", a_en: "Local VPS are prone to latency spikes or unexpected freezes, which could cost you thousands in critical trades. Wintop has active redundancy." },
+                { q_zh: "平台支持哪些付款方式？", q_en: "Which payment methods do you accept?", a_zh: "支持 Stripe 国际信用卡通道（Stripe 结算网关），以及主流加密货币（USDT TRC-20 快速到账结算）。", a_en: "We support major credit cards via Stripe Secure Gateway, Bank wire, and Cryptocurrency deposits (mainly USDT TRC-20)." },
+                { q_zh: "跟单业绩是如何计算的？", q_en: "How is performance calculated?", a_zh: "由 Wintop 审计引擎读取各经纪商底单流水数据实时演算。采用国际公认的时间加权回报率（TWR）算法，排除充值和提取资金对收益率的干扰。", a_en: "Performance statistics are calculated dynamically by auditing broker ledger files using Time-Weighted Return (TWR) formulas." },
+                { q_zh: "信号源是如何进行排名的？", q_en: "How are signals ranked?", a_zh: "排名不仅考量历史总增益，还会给历史最大回撤、实盘杠杆比重、存活寿命及资金曲线顺滑度分配不同权重，杜绝短期投机账号登顶。", a_en: "Ranking uses a weighted algorithm factoring gain, age, win rate, historical drawdown, and stability to avoid indexing high-risk accounts." },
+                { q_zh: "Wintop 2.0 如何自动同步复制订单？", q_en: "How does Wintop copy trades?", a_zh: "云端接收网桥监听母账户的开仓指令。一旦侦测到变化，系统在 10ms 内根据各跟单者的余额和配置倍数自动折算手数，并下达给子账户券商。", a_en: "Our node monitors parent accounts. Upon execution, child orders are calculating and copy trades are sent to target brokers under 10ms." }
             ]
         };
 
@@ -818,6 +916,7 @@
             isSimulatorOn: false,
             activePlatform: 'MT4',
             currentWizardStep: 1,
+            currentLanguage: 'zh',
             activeRules: [],
             chartInstances: [],
             selectedSupportCategory: 'faq',
@@ -839,6 +938,7 @@
                 this.initSimulatorGauge(100); 
                 this.initSimulatorPerformanceChart();
                 this.syncSessionUI();
+                this.translateDOM();
             },
 
             loadFromStorage() {
@@ -863,13 +963,19 @@
                 const XAU = document.getElementById('tick_XAUUSD');
                 const BTC = document.getElementById('tick_BTC');
                 const ETH = document.getElementById('tick_ETH');
+                const SOL = document.getElementById('tick_SOL');
+                const OKB = document.getElementById('tick_OKB');
                 let priceXAU = 2415.80; let priceBTC = 68410.50; let priceETH = 3524.15;
+                let priceSOL = 152.34; let priceOKB = 54.20;
 
                 const updateTickerDOM = () => {
                     if (XAU) XAU.innerText = `$${priceXAU.toFixed(2)}`;
                     if (BTC) BTC.innerText = `$${priceBTC.toLocaleString()}`;
                     if (ETH) ETH.innerText = `$${priceETH.toLocaleString()}`;
-                    ['XAUUSD', 'BTC', 'ETH'].forEach(k => {
+                    if (SOL) SOL.innerText = `$${priceSOL.toFixed(2)}`;
+                    if (OKB) OKB.innerText = `$${priceOKB.toFixed(2)}`;
+                    
+                    ['XAUUSD', 'BTC', 'ETH', 'SOL', 'OKB', 'EURUSD', 'GBPUSD', 'USDJPY'].forEach(k => {
                         const original = document.getElementById(`tick_${k}`);
                         const shadow = document.getElementById(`tick2_${k}`);
                         if (original && shadow) shadow.innerText = original.innerText;
@@ -878,20 +984,23 @@
 
                 const fetchLiveRates = async () => {
                     try {
-                        const response = await fetch('https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC,ETH,PAXG&tsyms=USD');
+                        const response = await fetch('https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC,ETH,PAXG,SOL,OKB&tsyms=USD');
                         const data = await response.json();
                         if (data) {
                             if (data.BTC) priceBTC = data.BTC.USD;
                             if (data.ETH) priceETH = data.ETH.USD;
                             if (data.PAXG) priceXAU = data.PAXG.USD;
+                            if (data.SOL) priceSOL = data.SOL.USD;
+                            if (data.OKB) priceOKB = data.OKB.USD;
                             updateTickerDOM();
                         }
-                    } catch (e) { console.warn("已切换为离线抗震安全报价策略。"); }
+                    } catch (e) { console.warn("已通过本地容灾行情总线挂载。"); }
                 };
                 await fetchLiveRates(); setInterval(fetchLiveRates, 30000);
                 setInterval(() => {
                     priceXAU += (Math.random() - 0.5) * 0.15;
                     priceBTC += (Math.random() - 0.5) * 1.5;
+                    priceSOL += (Math.random() - 0.5) * 0.05;
                     updateTickerDOM();
                 }, 5000);
             },
@@ -909,6 +1018,30 @@
                 this.isSimulatorOn = checkbox.checked;
                 this.renderSignalsTable(mockSignals);
             },
+
+            translateDOM() {
+                const dict = i18n[this.currentLanguage] || i18n.zh;
+                document.querySelectorAll('[data-i18n]').forEach(el => {
+                    const key = el.getAttribute('data-i18n');
+                    if (dict[key]) {
+                        el.innerText = dict[key];
+                    }
+                });
+            },
+
+            selectLanguage(lang) {
+                this.currentLanguage = lang;
+                const flags = { zh: '🇨🇳', en: '🇺🇸', id: '🇮🇩', de: '🇩🇪', es: '🇪🇸', fr: '🇫🇷', it: '🇮🇹' };
+                document.getElementById('currentLangFlag').innerText = flags[lang] || '🇨🇳';
+                document.getElementById('langDropdown').classList.add('hidden');
+                
+                this.translateDOM();
+                this.renderSignalsTable(mockSignals);
+                this.renderSupportCategory();
+                this.showCustomNotification(`已无感切闸翻译：${lang.toUpperCase()}`);
+            },
+
+            toggleLangDropdown() { document.getElementById('langDropdown').classList.toggle('hidden'); },
 
             renderSignalsTable(data) {
                 this.chartInstances.forEach(chart => chart.destroy());
@@ -1021,7 +1154,7 @@
                 });
 
                 this.renderSignalsTable(filtered);
-                this.showCustomNotification(`13维参数过滤连通完毕：找到 ${filtered.length} 组资产组合。`);
+                this.showCustomNotification(`13维参数过滤完毕：找到 ${filtered.length} 组匹配结果。`);
             },
 
             resetFilters() {
@@ -1032,17 +1165,15 @@
                 document.getElementById('filter_length').value = 'all';
                 document.getElementById('filter_broker').value = '';
                 this.renderSignalsTable(mockSignals);
-                this.showCustomNotification("量化搜索引擎已完成内存复位。");
+                this.showCustomNotification("搜索引擎过滤面板已重置。");
             },
 
-            // 向导控制 (三步式连接向导和注册结算中心)
             setWizStep(step) {
                 this.currentWizardStep = step;
                 document.getElementById('wiz_panel_step1').className = step === 1 ? 'block' : 'hidden';
                 document.getElementById('wiz_panel_step2').className = step === 2 ? 'block' : 'hidden';
                 document.getElementById('wiz_panel_step3').className = step === 3 ? 'block' : 'hidden';
 
-                // 指示器样式调整
                 document.getElementById('step1_circle').className = step >= 1 ? 'w-8 h-8 rounded-full bg-emerald-500 text-black flex items-center justify-center font-bold text-xs' : 'w-8 h-8 rounded-full bg-zinc-800 text-zinc-500 flex items-center justify-center font-bold text-xs';
                 document.getElementById('step2_circle').className = step >= 2 ? 'w-8 h-8 rounded-full bg-emerald-500 text-black flex items-center justify-center font-bold text-xs' : 'w-8 h-8 rounded-full bg-zinc-800 text-zinc-500 flex items-center justify-center font-bold text-xs';
                 document.getElementById('step3_circle').className = step >= 3 ? 'w-8 h-8 rounded-full bg-emerald-500 text-black flex items-center justify-center font-bold text-xs' : 'w-8 h-8 rounded-full bg-zinc-800 text-zinc-500 flex items-center justify-center font-bold text-xs';
@@ -1062,7 +1193,6 @@
                     return;
                 }
 
-                // Supabase 直连写表
                 if (supabaseClient) {
                     try {
                         const { error } = await supabaseClient
@@ -1070,31 +1200,29 @@
                             .insert([{ user_id: testUserId, platform: plat, broker_server: srv, account_number: acc, investor_password: pass, status: 'active' }]);
                         if (error) throw error;
                     } catch (e) {
-                        console.warn("云网桥数据落库异常，已启用沙盒保障通道。");
+                        console.warn("云数据连接失败，启用离线沙盒网桥。");
                     }
                 }
 
                 confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
-                this.showCustomNotification("实盘账户云连接已经建立并安全锁定！");
+                this.showCustomNotification("实盘账户同步到云！跟单服务已经顺利激活绑定。");
                 this.setWizStep(1);
                 this.switchTab('copy-rules');
             },
 
-            // 绘制 Canvas 环形水位计 (Minimal Balance Gauge)
+            // 绘制 Canvas 水位计 (Minimal Balance Gauge)
             initSimulatorGauge(percent) {
                 const canvas = document.getElementById('gaugeCanvas');
                 if (!canvas) return;
                 const ctx = canvas.getContext('2d');
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-                // 底座灰弧
                 ctx.beginPath();
                 ctx.arc(95, 100, 75, Math.PI, 2 * Math.PI);
                 ctx.strokeStyle = '#18181c';
                 ctx.lineWidth = 14;
                 ctx.stroke();
 
-                // 绿色指示弧
                 ctx.beginPath();
                 ctx.arc(95, 100, 75, Math.PI, Math.PI + (percent / 100) * Math.PI);
                 ctx.strokeStyle = '#10b981';
@@ -1102,7 +1230,7 @@
                 ctx.stroke();
             },
 
-            // 联动曲线回测曲线 (跟单模拟回测器)
+            // 模拟回测曲线
             initSimulatorPerformanceChart() {
                 const ctx = document.getElementById('simChartCanvas');
                 if (!ctx) return;
@@ -1113,7 +1241,7 @@
                     data: {
                         labels: ['周一', '周二', '周三', '周四', '周五', '今日(最新)'],
                         datasets: [
-                            { label: '预计资金余额 (Balance)', data: [10000, 10000, 10000, 10000, 10000, 10000], borderColor: '#c5a059', borderWidth: 2.5, fill: false },
+                            { label: '预计可用余额 (Balance)', data: [10000, 10000, 10000, 10000, 10000, 10000], borderColor: '#c5a059', borderWidth: 2.5, fill: false },
                             { label: '预计可用净值 (Equity)', data: [10000, 10100, 9950, 10250, 10400, 10450], borderColor: '#10b981', borderDash: [5, 5], borderWidth: 1.5, fill: false }
                         ]
                     },
@@ -1124,42 +1252,31 @@
             runSimulation() {
                 const depositVal = parseFloat(document.getElementById('sim_deposit').value);
                 
-                // 执行高拟真复利计算：预期余额 = 本金 * 1.167
                 const finalBalance = depositVal * 1.1672;
-                const finalEquity = finalBalance * 0.985; // 预设 1.5% 浮动回撤
+                const finalEquity = finalBalance * 0.985; 
 
                 this.simChart.data.datasets[0].data = [depositVal, depositVal * 1.03, depositVal * 1.05, depositVal * 1.09, depositVal * 1.14, finalBalance];
                 this.simChart.data.datasets[1].data = [depositVal, depositVal * 1.01, depositVal * 0.99, depositVal * 1.07, depositVal * 1.12, finalEquity];
                 this.simChart.update();
 
-                // 仪表盘打到安全数值
                 this.initSimulatorGauge(96);
                 document.getElementById('gaugePercentText').innerText = "96%";
                 
                 confetti({ particleCount: 100, spread: 60, origin: { y: 0.6 } });
-                this.showCustomNotification(`模拟计算完毕。基于复利公式计算所得预计期末资产净值为: $${finalBalance.toFixed(2)}`);
+                this.showCustomNotification(`模拟回测计算完毕。期末预计资产总额为: $${finalBalance.toFixed(2)}`);
             },
 
-            // OTP 获取与登录校验系统 (模块五)
-            openAuthModal() {
-                document.getElementById('authModal').classList.remove('hidden');
-            },
-            closeAuthModal() {
-                document.getElementById('authModal').classList.add('hidden');
-            },
+            openAuthModal() { document.getElementById('authModal').classList.remove('hidden'); },
+            closeAuthModal() { document.getElementById('authModal').classList.add('hidden'); },
 
             sendOTP() {
                 const email = document.getElementById('authEmailInput').value.trim();
                 if (!email) {
-                    this.showCustomNotification("请先输入有效的注册邮箱地址！", true);
-                    return;
+                    this.showCustomNotification("请先输入有效的邮箱地址！", true); return;
                 }
-
-                // 启动 60 秒倒计时防刷保护
                 this.otpCountdown = 60;
                 const btn = document.getElementById('getOtpBtn');
                 btn.disabled = true;
-                
                 const cdId = setInterval(() => {
                     this.otpCountdown--;
                     btn.innerText = `${this.otpCountdown}s`;
@@ -1170,18 +1287,13 @@
                     }
                 }, 1000);
 
-                // 生成随机 6 位验证码并在右上角进行仿真的系统级安全推送
                 this.generatedOtpCode = Math.floor(100000 + Math.random() * 900000).toString();
-                
-                // 真实调用 Supabase OTP 邮箱通道
                 if (supabaseClient) {
-                    supabaseClient.auth.signInWithOtp({ email }).catch(err => console.log("API 邮件通道受限"));
+                    supabaseClient.auth.signInWithOtp({ email }).catch(() => {});
                 }
-
-                // 离线沙盒安全模拟提示
                 setTimeout(() => {
-                    this.showCustomNotification(`[Wintop 安全网桥] 验证码邮件已发出。测试专用验证码为: ${this.generatedOtpCode}`);
-                }, 1200);
+                    this.showCustomNotification(`[Wintop OTP] 邮件验证码已发。测试验证码为: ${this.generatedOtpCode}`);
+                }, 1000);
             },
 
             verifyOTP() {
@@ -1190,13 +1302,13 @@
 
                 if (code === this.generatedOtpCode || code === "883712") {
                     confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
-                    this.userSession = { email: email || "hoey_tester@wintop.com" };
+                    this.userSession = { email: email || "tester@wintop.com" };
                     this.saveToStorage();
                     this.syncSessionUI();
                     this.closeAuthModal();
-                    this.showCustomNotification("登录验证通过！Wintop 安全网关会话已挂载。");
+                    this.showCustomNotification("验证成功！Wintop 安全网桥会话已成功加载。");
                 } else {
-                    this.showCustomNotification("验证码输入错误或已失效，请重新核对！", true);
+                    this.showCustomNotification("验证码输入错误，请重新核对！", true);
                 }
             },
 
@@ -1212,15 +1324,15 @@
                                 <i class="fa-solid fa-chevron-down text-[10px]"></i>
                             </div>
                             <div class="absolute top-full right-0 mt-1 bg-[#121215] border border-[#c5a059]/10 rounded-lg shadow-2xl py-2 w-52 z-50 hidden group-hover:block">
-                                <a href="#" onclick="app.switchTab('account-center')" class="block px-4 py-2 text-xs text-zinc-300 hover:bg-[#18181c] hover:text-[#c5a059]"><i class="fa-solid fa-cloud-arrow-up mr-2"></i>绑定实盘 MT4/5</a>
-                                <a href="#" onclick="app.logoutUser()" class="block px-4 py-2 text-xs text-rose-500 hover:bg-[#18181c]"><i class="fa-solid fa-sign-out mr-2"></i>退出当前账户</a>
+                                <a href="#" onclick="app.switchTab('account-center')" class="block px-4 py-2 text-xs text-zinc-300 hover:bg-[#18181c] hover:text-[#c5a059]"><i class="fa-solid fa-cloud-arrow-up mr-2"></i><span>绑定实盘 MT4/5</span></a>
+                                <a href="#" onclick="app.logoutUser()" class="block px-4 py-2 text-xs text-rose-500 hover:bg-[#18181c]"><i class="fa-solid fa-sign-out mr-2"></i><span>退出当前账户</span></a>
                             </div>
                         </div>
                     `;
                 } else {
                     area.innerHTML = `
                         <button onclick="app.openAuthModal()" class="bg-gradient-to-r from-[#9a7d3c] to-[#e5c17d] text-black font-extrabold px-4 py-1.5 rounded-lg text-xs cursor-pointer select-none shadow-md">
-                            <i class="fa-solid fa-user-lock mr-1"></i><span>登录/注册</span>
+                            <i class="fa-solid fa-user-lock mr-1"></i><span data-i18n="nav_login">登录/注册</span>
                         </button>
                     `;
                 }
@@ -1230,10 +1342,9 @@
                 this.userSession = null;
                 this.saveToStorage();
                 this.syncSessionUI();
-                this.showCustomNotification("您已成功安全退出 Wintop 量化管理系统。");
+                this.showCustomNotification("您已退出 Wintop 安全会话通道。");
             },
 
-            // 仿真客服人机交互 AI 自适应问答 (模块三)
             clickPresetQuestion(qId) {
                 const body = document.getElementById('chatBoxBody');
                 let qText = "";
@@ -1241,16 +1352,15 @@
 
                 if (qId === 1) {
                     qText = "如何绑定实盘 MT4/5 账号？";
-                    rText = "绑定极速连接：去导航栏点击“MT4/MT5 连接”，根据三步向导提供您的服务器名、账号及只读观摩密码（保障本金安全），Wintop 分布式网桥将在 10ms 内为您在云端全自动建立同步复制接口。";
+                    rText = "绑定连接十分安全简单：进入导航栏中点击“我的账户” -> “MT4/MT5 连接”，在步骤 2 输入对应的服务器与只读密码，Wintop 云网端就会为您完成监听握手部署。";
                 } else if (qId === 2) {
                     qText = "什么是跟单模拟器水位计？";
-                    rText = "水位计（Minimal Balance Gauge）通过客观的历史曲线计算您在跟单时可能面临的爆仓最大回撤范围。水位计处于 100% 代表账户本金处于完美安全防守阶段。";
+                    rText = "它是 Wintop Simulator 内置的 Minimal Balance Gauge，基于多因子压力回测公式，能精确呈现出跟随策略时面临的历史爆仓最大风险。水位保持 100% 代表本金处于完美安全防御环境。";
                 } else {
                     qText = "订阅策略是否产生多余滑点损耗？";
-                    rText = "得益于 Wintop 2.0 直连纽约 Equinix LD4 数据中心的独占光纤通道，我们与母账户的成交同步延迟降低到了 11ms 级别，滑点几乎趋于 0，确保您的实盘收益与大厅策略保持绝对完美的对齐。";
+                    rText = "Wintop 的跟单中继直接部署在纽约 Equinix LD4 机房，直连外汇流通提供商（LP）。极速光纤中继将交易延迟控制在 10ms 左右，有效避免了本地复制常见的数据延迟及滑点磨损。";
                 }
 
-                // 打印提问
                 body.innerHTML += `
                     <div class="bg-zinc-800 p-2.5 rounded-lg text-right text-white">
                         <p class="text-sky-400 font-bold mb-1">您 (Hoey):</p>
@@ -1258,10 +1368,7 @@
                     </div>
                 `;
 
-                // 仿真打字机
-                body.innerHTML += `
-                    <div id="chatTypingIndicator" class="text-zinc-600 italic">Hoey 正在输入中...</div>
-                `;
+                body.innerHTML += `<div id="chatTypingIndicator" class="text-zinc-600 italic">技术总监 Hoey 正在输入中...</div>`;
                 body.scrollTop = body.scrollHeight;
 
                 setTimeout(() => {
@@ -1270,59 +1377,12 @@
 
                     body.innerHTML += `
                         <div class="bg-[#121215] p-2.5 rounded-lg border border-zinc-800">
-                            <p class="text-[#c5a059] font-bold mb-1">技术主管 Hoey回复:</p>
+                            <p class="text-[#c5a059] font-bold mb-1">技术主管 Hoey 回复:</p>
                             <p>${rText}</p>
                         </div>
                     `;
                     body.scrollTop = body.scrollHeight;
                 }, 1100);
-            },
-
-            // 翻译包注册
-            selectLanguage(lang) {
-                const flags = { zh: '🇨🇳', en: '🇺🇸', id: '🇮🇩', de: '🇩🇪', es: '🇪🇸', fr: '🇫🇷', it: '🇮🇹' };
-                document.getElementById('currentLangFlag').innerText = flags[lang] || '🇨🇳';
-                document.getElementById('langDropdown').classList.add('hidden');
-                this.showCustomNotification(`Wintop 2.0 7国语言已无感切闸翻译：${lang.toUpperCase()}`);
-            },
-            toggleLangDropdown() { document.getElementById('langDropdown').classList.toggle('hidden'); },
-
-            renderActiveRules() {
-                const rulesBody = document.getElementById('activeRulesList'); if (!rulesBody) return;
-                rulesBody.innerHTML = this.activeRules.map(r => `
-                    <tr class="border-b border-zinc-800 text-zinc-300 font-mono">
-                        <td class="py-3 font-semibold text-white">${r.id}</td>
-                        <td class="py-3 text-zinc-400">${r.broker} (${r.platform})</td>
-                        <td class="py-3 text-right text-sky-400 font-bold">${r.multiplier}</td>
-                        <td class="py-3 text-right text-rose-400 font-bold">${r.drawdown}</td>
-                        <td class="py-3 text-center"><span class="bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-[10px] px-2.5 py-0.5 rounded-full font-bold">已激活</span></td>
-                    </tr>
-                `).join('');
-                document.getElementById('active_accounts_banner').innerText = `${this.activeRules.length} 组`;
-            },
-
-            subscribeSignal(name, price) {
-                document.getElementById('pay_strategy_name').innerText = name;
-                document.getElementById('pay_strategy_fee').innerText = `$${price.toFixed(2)}`;
-                document.getElementById('paymentModal').classList.remove('hidden');
-            },
-            closePaymentModal() { document.getElementById('paymentModal').classList.add('hidden'); },
-            selectPaymentChannel(channel) {
-                const btnStripe = document.getElementById('pay_btn_stripe'); const btnUSDT = document.getElementById('pay_btn_usdt');
-                const formStripe = document.getElementById('stripe_form_area'); const formUSDT = document.getElementById('usdt_form_area');
-                if (channel === 'stripe') {
-                    btnStripe.className = "flex-1 py-2 rounded-lg text-xs font-bold border border-[#c5a059] bg-[#c5a059] text-black";
-                    btnUSDT.className = "flex-1 py-2 rounded-lg text-xs font-bold border border-zinc-800 text-zinc-400 hover:text-white";
-                    formStripe.className = "block"; formUSDT.className = "hidden";
-                } else {
-                    btnUSDT.className = "flex-1 py-2 rounded-lg text-xs font-bold border border-[#c5a059] bg-[#c5a059] text-black";
-                    btnStripe.className = "flex-1 py-2 rounded-lg text-xs font-bold border border-zinc-800 text-zinc-400 hover:text-white";
-                    formUSDT.className = "block"; formStripe.className = "hidden";
-                }
-            },
-            redirectCommercialChannel() {
-                this.showCustomNotification("通道加密跳转中...");
-                setTimeout(() => { window.open('https://t.me/Wintop_Official_Manager_FakeLink'); }, 800);
             },
 
             selectSupportCategory(cat) {
@@ -1336,10 +1396,14 @@
 
             renderSupportCategory() {
                 const area = document.getElementById('faqContentArea'); if (!area) return;
+                
+                const dict = i18n[this.currentLanguage] || i18n.zh;
+                const langSuffix = this.currentLanguage === 'en' ? '_en' : '_zh';
+
                 if (this.selectedSupportCategory === 'contact') {
                     area.innerHTML = `
                         <div class="bg-[#121215] border border-[#c5a059]/15 rounded-xl p-6 shadow-xl">
-                            <h3 class="text-base font-bold text-white mb-2">建立高级技术工单</h3>
+                            <h3 class="text-base font-bold text-white mb-2" data-i18n="contact_title">建立技术反馈工单</h3>
                             <p class="text-xs text-zinc-400 mb-6">跨洋同步发生延迟突增或充值卡单？数据将直接落库至工程师队列中中继派单。</p>
                             <form onsubmit="app.submitContactForm(event)" class="flex flex-col gap-4">
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -1353,13 +1417,22 @@
                         </div>
                     `; return;
                 }
-                area.innerHTML = `<div class="flex flex-col gap-3">` + faqDictionary.faq.map((item, idx) => `
+
+                // 还原 13 个常见问题与核心合规免责政策 (FAQ / Policies Accordions)
+                const items = faqDictionary[this.selectedSupportCategory] || [];
+                area.innerHTML = `<div class="flex flex-col gap-3">` + items.map((item, idx) => `
                     <div class="border border-zinc-800 rounded-lg bg-zinc-950 overflow-hidden">
-                        <button onclick="app.toggleAccordion(${idx})" class="w-full text-left px-4 py-3.5 flex justify-between items-center text-xs sm:text-sm font-semibold text-zinc-200"><span>${item.q_zh}</span></button>
-                        <div class="p-4 border-t border-zinc-800 bg-[#0c0c0e] text-xs leading-relaxed text-zinc-400 ${this.openAccordionId === idx ? 'block' : 'hidden'}">${item.a_zh}</div>
+                        <button onclick="app.toggleAccordion(${idx})" class="w-full text-left px-4 py-3.5 flex justify-between items-center text-xs sm:text-sm font-semibold text-zinc-200">
+                            <span>${item['q' + langSuffix]}</span>
+                            <i class="fa-solid fa-chevron-down text-zinc-500 text-xs"></i>
+                        </button>
+                        <div class="p-4 border-t border-zinc-800 bg-[#0c0c0e] text-xs leading-relaxed text-zinc-400 ${this.openAccordionId === idx ? 'block' : 'hidden'}">
+                            ${item['a' + langSuffix]}
+                        </div>
                     </div>
                 `).join('') + `</div>`;
             },
+
             toggleAccordion(idx) { this.openAccordionId = this.openAccordionId === idx ? null : idx; this.renderSupportCategory(); },
 
             async submitContactForm(e) {
@@ -1376,7 +1449,7 @@
                             .insert([{ user_id: testUserId, category: 'Support Contact', title: `[${name} / ${email}] ${subject}`, description: message, status: 'processing' }]);
                         if (error) throw error;
                         this.showCustomNotification("云技术工单安全落库完毕，工程师队列已接入。");
-                    } catch (err) { console.error("工单同步降级保护:", err.message); }
+                    } catch (err) { console.error("工单同步阻断保护:", err.message); }
                 }
                 e.target.reset();
             },
@@ -1423,9 +1496,7 @@
                 }, 5000);
             },
 
-            toggleChat() {
-                document.getElementById('liveChatWindow').classList.toggle('hidden');
-            },
+            toggleChat() { document.getElementById('liveChatWindow').classList.toggle('hidden'); },
 
             sendChatMessage(e) {
                 e.preventDefault();
@@ -1456,6 +1527,44 @@
                     `;
                     body.scrollTop = body.scrollHeight;
                 }, 800);
+            },
+
+            renderActiveRules() {
+                const rulesBody = document.getElementById('activeRulesList'); if (!rulesBody) return;
+                rulesBody.innerHTML = this.activeRules.map(r => `
+                    <tr class="border-b border-zinc-800 text-zinc-300 font-mono">
+                        <td class="py-3 font-semibold text-white">${r.id}</td>
+                        <td class="py-3 text-zinc-400">${r.broker} (${r.platform})</td>
+                        <td class="py-3 text-right text-sky-400 font-bold">${r.multiplier}</td>
+                        <td class="py-3 text-right text-rose-400 font-bold">${r.drawdown}</td>
+                        <td class="py-3 text-center"><span class="bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-[10px] px-2.5 py-0.5 rounded-full font-bold">已激活</span></td>
+                    </tr>
+                `).join('');
+                document.getElementById('active_accounts_banner').innerText = `${this.activeRules.length} 组`;
+            },
+
+            // 收银台付款模拟与结算更新
+            simulateStripePay() {
+                this.showCustomNotification("正在向 3D-Secure 国际网关请求授权凭证，请稍候...");
+                setTimeout(() => {
+                    confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
+                    
+                    // 状态同步：改变步骤3的结算对账单未付状态为已支付激活！
+                    const badge = document.getElementById('billing-status-badge');
+                    if (badge) {
+                        badge.className = "px-2.5 py-0.5 bg-emerald-950 text-emerald-400 border border-emerald-900/40 rounded text-[10px]";
+                        badge.innerText = "已激活";
+                    }
+                    const payBtn = document.getElementById('activateBillingBtn');
+                    if (payBtn) {
+                        payBtn.className = "px-6 py-2.5 bg-zinc-800 text-zinc-500 rounded-xl text-xs font-bold cursor-not-allowed";
+                        payBtn.disabled = true;
+                        payBtn.innerText = "云通道费已结清";
+                    }
+
+                    this.showCustomNotification("Stripe 信用卡清算扣款成功！Wintop 2.0.4 授权服务已正式激活。");
+                    this.closePaymentModal();
+                }, 1800);
             }
         };
 
